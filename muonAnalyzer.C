@@ -62,10 +62,8 @@ void muonAnalyzer::Initialise() {
   h_N_PV = CreateH1F ("h_N_PV","h_N_PV",50,0,50); 
   h_N_PV->TH1::SetDefaultSumw2();
 
-  h_N_dR_Vtx_Muon[0] = CreateH1F("h_N_dR_Vtx_Muon_Mu1","h_N_dR_Vtx_Muon_Mu1",50,0,1);
-  h_N_dR_Vtx_Muon[1] = CreateH1F("h_N_dR_Vtx_Muon_Mu2","h_N_dR_Vtx_Muon_Mu2",50,0,1);
-
-  h_N_dZ_PV0_PVLep = CreateH1F("h_N_dZ_PV0_PVLep", "h_N_dZ_PV0_PVLep", 50,0, 1 ); 
+  h_N_PV0_PVLep = CreateH1F ("h_N_PV0_PVLep","h_N_PV0_PVLep",20,0,20);
+  h_N_dZ_PV0_PVLep = CreateH1F("h_N_dZ_PV0_PVLep", "h_N_dZ_PV0_PVLep", 50,0,1);  
 
   h_N_Dilep_TypeMu = CreateH1F("h_N_Dilep_TypeMu", "h_N_Dilep_TypeMu", 5,0,5);
   h_N_Dilep_TypeMu_LP = CreateH1F("h_N_Dilep_TypeMu_LP", "h_N_Dilep_TypeMu_LP", 5,0,5);
@@ -170,13 +168,122 @@ void muonAnalyzer::Initialise() {
   h_Dilep_StaNStationPV[0] = CreateH2F("h_Dilep_StaNStationPV_Mu1", "h_Dilep_StaNStationPV_Mu1", 50,0,50,5, -0.5, 4.5);
   h_Dilep_StaNStationPV[1] = CreateH2F("h_Dilep_StaNStationPV_Mu2", "h_Dilep_StaNStationPV_Mu2", 50,0,50,5, -0.5, 4.5);
 
-  h_Dilep_dxy[0] = CreateH1F("h_Dilep_dxy_Mu1", "h_Dilep_dxy_Mu1", 100, -0.4, 0.4);
-  h_Dilep_dxy[1] = CreateH1F("h_Dilep_dxy_Mu2", "h_Dilep_dxy_Mu2", 100, -0.4, 0.4);
-  h_Dilep_dz[0] = CreateH1F("h_Dilep_dz_Mu1", "h_Dilep_dz_Mu1", 100, -1.0, 1.0);
-  h_Dilep_dz[1] = CreateH1F("h_Dilep_dz_Mu2", "h_Dilep_dz_Mu2", 100, -1.0, 1.0);
+  h_Dilep_dxy[0] = CreateH1F("h_Dilep_dxy_Mu1", "h_Dilep_dxy_Mu1", 100, 0.0, 0.2);
+  h_Dilep_dxy[1] = CreateH1F("h_Dilep_dxy_Mu2", "h_Dilep_dxy_Mu2", 100, 0.0, 0.2);
 
-  h_Dilep_dzMu[0] = CreateH1F("h_Dilep_dzMu_Mu1", "h_Dilep_dzMu_Mu1", 100, -1.0, 1.0);
-  h_Dilep_dzMu[1] = CreateH1F("h_Dilep_dzMu_Mu2", "h_Dilep_dzMu_Mu2", 100, -1.0, 1.0);
+  h_Dilep_dz_GTrack[0] = CreateH1F("h_Dilep_dz_GTrack_Mu1", "h_Dilep_dz_GTrack_Mu1", 100, 0.0, 4.0);
+  h_Dilep_dz_GTrack[1] = CreateH1F("h_Dilep_dz_GTrack_Mu2", "h_Dilep_dz_GTrack_Mu2", 100, 0.0, 4.0);
+  h_Dilep_dz_InTrack[0] = CreateH1F("h_Dilep_dz_InTrack_Mu1", "h_Dilep_dz_InTrack_Mu1", 100, 0.0, 0.5);
+  h_Dilep_dz_InTrack[1] = CreateH1F("h_Dilep_dz_InTrack_Mu2", "h_Dilep_dz_InTrack_Mu2", 100, 0.0, 0.5);
+
+  //dz Plots at Dileptonic level after GLB and PF Muon. Independent muons
+  //Key:
+  //  dz           = Standard PV Selection, Vertex_z method
+  //  dzMu         = New PV Selection, Vertex_z method
+  //  dz_BestTrack = Standard PV Selection, dzBestTrack method
+
+  h_Dilep_dz[0] = CreateH1F("h_Dilep_dz_Mu1", "h_Dilep_dz_Mu1", 100, 0.0, 0.5);
+  h_Dilep_dz[1] = CreateH1F("h_Dilep_dz_Mu2", "h_Dilep_dz_Mu2", 100, 0.0, 0.5);
+  h_Dilep_dzMu[0] = CreateH1F("h_Dilep_dzMu_Mu1", "h_Dilep_dzMu_Mu1", 100, 0.0, 0.5);
+  h_Dilep_dzMu[1] = CreateH1F("h_Dilep_dzMu_Mu2", "h_Dilep_dzMu_Mu2", 100, 0.0, 0.5);
+  h_Dilep_dz_BestTrack[0] = CreateH1F("h_Dilep_dz_BestTrack_Mu1", "h_Dilep_dz_BestTrack_Mu1", 100, 0.0, 0.5);
+  h_Dilep_dz_BestTrack[1] = CreateH1F("h_Dilep_dz_BestTrack_Mu2", "h_Dilep_dz_BestTrack_Mu2", 100, 0.0, 0.5);
+
+  //dz Plots at  Dileptonic level after TightID selection before d_xy cut. Independent muons
+
+  h_Dilep_dz_bf_dy[0] = CreateH1F("h_Dilep_dz_bf_dy_Mu1", "h_Dilep_dz_bf_dy_Mu1", 100, 0.0, 4.0);
+  h_Dilep_dz_bf_dy[1] = CreateH1F("h_Dilep_dz_bf_dy_Mu2", "h_Dilep_dz_bf_dy_Mu2", 100, 0.0, 4.0);
+  h_Dilep_dzMu_bf_dy[0] = CreateH1F("h_Dilep_dzMu_bf_dy_Mu1", "h_Dilep_dzMu_bf_dy_Mu1", 100, 0.0, 4.0);
+  h_Dilep_dzMu_bf_dy[1] = CreateH1F("h_Dilep_dzMu_bf_dy_Mu2", "h_Dilep_dzMu_bf_dy_Mu2", 100, 0.0, 4.0);
+  h_Dilep_dz_BestTrack_bf_dy[0] = CreateH1F("h_Dilep_dz_BestTrack_bf_dy_Mu1", "h_Dilep_dz_BestTrack_bf_dy_Mu1", 100, 0.0, 4.0);
+  h_Dilep_dz_BestTrack_bf_dy[1] = CreateH1F("h_Dilep_dz_BestTrack_bf_dy_Mu2", "h_Dilep_dz_BestTrack_bf_dy_Mu2", 100, 0.0, 4.0);
+
+  //dz Plots at Dileptonic level after GLB and PF Muon. Selecting both muons at the same time.
+
+  h_TrueDilep_dz[0] = CreateH1F("h_TrueDilep_dz_Mu1", "h_TrueDilep_dz_Mu1", 100, 0.0, 0.5);
+  h_TrueDilep_dz[1] = CreateH1F("h_TrueDilep_dz_Mu2", "h_TrueDilep_dz_Mu2", 100, 0.0, 0.5);
+  h_TrueDilep_dzMu[0] = CreateH1F("h_TrueDilep_dzMu_Mu1", "h_TrueDilep_dzMu_Mu1", 100, 0.0, 0.5);
+  h_TrueDilep_dzMu[1] = CreateH1F("h_TrueDilep_dzMu_Mu2", "h_TrueDilep_dzMu_Mu2", 100, 0.0, 0.5);
+  h_TrueDilep_dz_BestTrack[0] = CreateH1F("h_TrueDilep_dz_BestTrack_Mu1", "h_TrueDilep_dz_BestTrack_Mu1", 100, 0.0, 0.5);
+  h_TrueDilep_dz_BestTrack[1] = CreateH1F("h_TrueDilep_dz_BestTrack_Mu2", "h_TrueDilep_dz_BestTrack_Mu2", 100, 0.0, 0.5);
+
+  //dz Plots at  Dileptonic level after TightID selection before d_xy cut. Selecting both muons at the same time.
+
+  h_TrueDilep_dz_bf_dy[0] = CreateH1F("h_TrueDilep_dz_bf_dy_Mu1", "h_TrueDilep_dz_bf_dy_Mu1", 100, 0.0, 0.5);
+  h_TrueDilep_dz_bf_dy[1] = CreateH1F("h_TrueDilep_dz_bf_dy_Mu2", "h_TrueDilep_dz_bf_dy_Mu2", 100, 0.0, 0.5);
+  h_TrueDilep_dzMu_bf_dy[0] = CreateH1F("h_TrueDilep_dzMu_bf_dy_Mu1", "h_TrueDilep_dzMu_bf_dy_Mu1", 100, 0.0, 0.5);
+  h_TrueDilep_dzMu_bf_dy[1] = CreateH1F("h_TrueDilep_dzMu_bf_dy_Mu2", "h_TrueDilep_dzMu_bf_dy_Mu2", 100, 0.0, 0.5);
+  h_TrueDilep_dz_BestTrack_bf_dy[0] = CreateH1F("h_TrueDilep_dz_BestTrack_bf_dy_Mu1", "h_TrueDilep_dz_BestTrack_bf_dy_Mu1", 100, 0.0, 0.5);
+  h_TrueDilep_dz_BestTrack_bf_dy[1] = CreateH1F("h_TrueDilep_dz_BestTrack_bf_dy_Mu2", "h_TrueDilep_dz_BestTrack_bf_dy_Mu2", 100, 0.0, 0.5);
+
+  //dz Plots at Dileptonic level after GLB and PF Muon. Independent muons.
+  //Key:
+  // PVSel_Equal:     The PV selected by the two criteria is the same
+  // PVSel_Not_Equal: The PV selected by the two criteria is not the same
+
+  h_Dilep_dz_PV_Eq[0] = CreateH1F("h_Dilep_dz_PVSel_Equal_Mu1", "h_Dilep_dz_PVSel_Equal_Mu1", 100, 0.0, 0.5);
+  h_Dilep_dz_PV_Eq[1] = CreateH1F("h_Dilep_dz_PVSel_Equal_Mu2", "h_Dilep_dz_PVSel_Equal_Mu2", 100, 0.0, 0.5);
+  h_Dilep_dzMu_PV_Eq[0] = CreateH1F("h_Dilep_dzMu_PVSel_Equal_Mu1", "h_Dilep_dzMu_PVSel_Equal_Mu1", 100, 0.0, 0.5);
+  h_Dilep_dzMu_PV_Eq[1] = CreateH1F("h_Dilep_dzMu_PVSel_Equal_Mu2", "h_Dilep_dzMu_PVSel_Equal_Mu2", 100, 0.0, 0.5);
+
+  h_Dilep_dz_PV_NEq[0] = CreateH1F("h_Dilep_dz_PVSel_Not_Equal_Mu1", "h_Dilep_dz_PVSel_Not_Equal_Mu1", 100, 0.0, 0.5);
+  h_Dilep_dz_PV_NEq[1] = CreateH1F("h_Dilep_dz_PVSel_Not_Equal_Mu2", "h_Dilep_dz_PVSel_Not_Equal_Mu2", 100, 0.0, 0.5);
+  h_Dilep_dzMu_PV_NEq[0] = CreateH1F("h_Dilep_dzMu_PVSel_Not_Equal_Mu1", "h_Dilep_dzMu_PVSel_Not_Equal_Mu1", 100, 0.0, 0.5);
+  h_Dilep_dzMu_PV_NEq[1] = CreateH1F("h_Dilep_dzMu_PVSel_Not_Equal_Mu2", "h_Dilep_dzMu_PVSel_Not_Equal_Mu2", 100, 0.0, 0.5);
+
+  //Plots for dileptonic signal Efficiency at Dileptonic level and GLB and PF Muon after appying dz cut on both muons: dz1 < 0.1, dz2 < 0.01 from 0.10 in 0.01 steps
+
+  h_2D_Dilep_dz_Eff = CreateH1F("h_2D_Dilep_dz_Eff","h_2D_Dilep_dz_Eff",10,0,10);
+  h_2D_Dilep_dzMu_Eff = CreateH1F("h_2D_Dilep_dzMu_Eff","h_2D_Dilep_dzMu_Eff",10,0,10);
+  h_2D_Dilep_dzBT_Eff = CreateH1F("h_2D_Dilep_dzBestTrack_Eff","h_2D_Dilep_dzBestTrack_Eff",10,0,10);
+
+  //Plots for dileptonic signal Efficiency at Dileptonic level and TightID selection before d_xy cut after appying dz cut on both muons: dz1 < 0.1, dz2 < 0.01 from 0.10 in 0.01 steps
+
+  h_2D_Dilep_dz_bf_dy_Eff = CreateH1F("h_2D_Dilep_dz_bf_dy_Eff","h_2D_Dilep_dz_bf_dy_Eff",10,0,10);
+  h_2D_Dilep_dzMu_bf_dy_Eff = CreateH1F("h_2D_Dilep_dzMu_bf_dy_Eff","h_2D_Dilep_dzMu_bf_dy_Eff",10,0,10);
+  h_2D_Dilep_dzBT_bf_dy_Eff = CreateH1F("h_2D_Dilep_dzBestTrack_bf_dy_Eff","h_2D_Dilep_dzBestTrack_bf_dy_Eff",10,0,10);
+
+  //dz 2D Plots at Dileptonic level after GLB and PF Muon. Selecting both muons at the same time.
+
+  h_2D_Dilep_dz = CreateH2F("h_2D_Dilep_dz","h_2D_Dilep_dz",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzMu = CreateH2F("h_2D_Dilep_dzMu","h_2D_Dilep_dzMu",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzBT = CreateH2F("h_2D_Dilep_dzBestTrack","h_2D_Dilep_dzBestTrack",50,0.0,0.5,50,0.0,0.5);
+
+  h_2D_Dilep_dz_PV_Eq = CreateH2F("h_2D_Dilep_dz_PVSel_Equal","h_2D_Dilep_dz_PVSel_Equal",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzMu_PV_Eq = CreateH2F("h_2D_Dilep_dzMu_PVSel_Equal","h_2D_Dilep_dzMu_PVSel_Equal",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzBT_PV_Eq = CreateH2F("h_2D_Dilep_dzBestTrack_PVSel_Equal","h_2D_Dilep_dzBestTrack_PVSel_Equal",50,0.0,0.5,50,0.0,0.5);
+
+  h_2D_Dilep_dz_PV_NEq = CreateH2F("h_2D_Dilep_dz_PVSel_Not_Equal","h_2D_Dilep_dz_PVSel_Not_Equal",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzMu_PV_NEq = CreateH2F("h_2D_Dilep_dzMu_PVSel_Not_Equal","h_2D_Dilep_dzMu_PVSel_Not_Equal",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzBT_PV_NEq = CreateH2F("h_2D_Dilep_dzBestTrack_PVSel_Not_Equal","h_2D_Dilep_dzBestTrack_PVSel_Not_Equal",50,0.0,0.5,50,0.0,0.5);
+
+  h_2D_Dilep_dz_bf_dy = CreateH2F("h_2D_Dilep_dz_bf_dy","h_2D_Dilep_dz_bf_dy",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzMu_bf_dy = CreateH2F("h_2D_Dilep_dzMu_bf_dy","h_2D_Dilep_dzMu_bf_dy",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzBT_bf_dy = CreateH2F("h_2D_Dilep_dzBestTrack_bf_dy","h_2D_Dilep_dzBestTrack_bf_dy",50,0.0,0.5,50,0.0,0.5);
+
+  //dz 2D Plots at Dileptonic level after TightID selection before d_xy cut. Selecting both muons at the same time.
+
+  h_2D_Dilep_dz_bf_dy_PV_Eq = CreateH2F("h_2D_Dilep_dz_bf_dy_PVSel_Equal","h_2D_Dilep_dz_bf_dy_PVSel_Equal",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzMu_bf_dy_PV_Eq = CreateH2F("h_2D_Dilep_dzMu_bf_dy_PVSel_Equal","h_2D_Dilep_dzMu_bf_dy_PVSel_Equal",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzBT_bf_dy_PV_Eq = CreateH2F("h_2D_Dilep_dzBestTrack_bf_dy_PVSel_Equal","h_2D_Dilep_bf_dy_dzBestTrack_PVSel_Equal",50,0.0,0.5,50,0.0,0.5);
+
+  h_2D_Dilep_dz_bf_dy_PV_NEq = CreateH2F("h_2D_Dilep_dz_bf_dy_PVSel_Not_Equal","h_2D_Dilep_dz_bf_dy_PVSel_Not_Equal",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzMu_bf_dy_PV_NEq = CreateH2F("h_2D_Dilep_dzMu_bf_dy_PVSel_Not_Equal","h_2D_Dilep_dzMu_bf_dy_PVSel_Not_Equal",50,0.0,0.5,50,0.0,0.5);
+  h_2D_Dilep_dzBT_bf_dy_PV_NEq = CreateH2F("h_2D_Dilep_dzBestTrack_bf_dy_PVSel_Not_Equal","h_2D_Dilep_dzBestTrack_bf_dy_PVSel_Not_Equal",50,0.0,0.5,50,0.0,0.5);
+
+  h_Dilep_Jet_Energy = CreateH1F("h_Dilep_Jet_Energy", "h_Dilep_Jet_Energy", 100, 0.0, 200);
+  h_Dilep_Jet_Energy_PV_Eq = CreateH1F("h_Dilep_Jet_Energy_PVSel_Equal", "h_Dilep_Jet_Energy_PVSel_Equal", 100, 0.0, 200);
+  h_Dilep_Jet_Energy_PV_NEq = CreateH1F("h_Dilep_Jet_Energy_PVSel_Not_Equal", "h_Dilep_Jet_Energy_PVSel_Not_Equal", 100, 0.0, 200);
+
+  h_Dilep_N_Jets = CreateH1F("h_Dilep_N_Jets", "h_Dilep_N_Jets", 10, 0, 10); 
+  h_Dilep_N_Jets_PV_Eq = CreateH1F("h_Dilep_N_Jets_PVSel_Equal", "h_Dilep_N_Jets_PVSel_Equal", 10, 0, 10);
+  h_Dilep_N_Jets_PV_NEq = CreateH1F("h_Dilep_N_Jets_PVSel_Not_Equal", "h_Dilep_N_Jets_PVSel_Not_Equal", 10, 0, 10);
+
+  // pdg ID of Mother particle for non prompt muons
+
+  h_Dilep_Gen_Muon_MpdgId = CreateH1F("h_Dilep_Gen_Muon_MpdgId","h_Dilep_Gen_Muon_MpdgId", 12000, -6000, 6000);
+  h_Dilep_Gen_Muon_MpdgId_PV_Eq = CreateH1F("h_Dilep_Gen_Muon_MpdgId_PVSel_Equal","h_Dilep_Gen_Muon_MpdgId_PVSel_Equal", 12000, -6000, 6000); 
+  h_Dilep_Gen_Muon_MpdgId_PV_NEq = CreateH1F("h_Dilep_Gen_Muon_MpdgId_PVSel_Not_Equal","h_Dilep_Gen_Muon_MpdgId_PVSel_Not_Equal", 12000, -6000, 6000);
 
 
   //------>  Plots after Tight Muon ID+ISO at dilepton level
@@ -258,6 +365,7 @@ void muonAnalyzer::InsideLoop() {
 
   ///** GEN INFORMATION
   G_GEN_PromptMuon_4vec.clear();
+  G_GEN_Muon_4vec.clear();
   G_GEN_PromptTauMuon_4vec.clear();
 
   ///** MUONS
@@ -315,28 +423,44 @@ void muonAnalyzer::InsideLoop() {
   bool isMuMu  = false; 
   bool isTauTau = false; 
   bool isTauMu = false;
+  bool isNonPrompt = false;
   
   
   
 
   if ( Signal=="MC_Wjets_S14" || Signal=="MC_Wjets_PU20bx25" ) {
-
-  UInt_t genPromptMuSize = 0;
-  genPromptMuSize = T_Gen_PromptMuon_Px->size();
+    
+    UInt_t genPromptMuSize = 0;
+    genPromptMuSize = T_Gen_PromptMuon_Px->size();
+    
+    UInt_t genNonPromptMuSize = 0;
+    genNonPromptMuSize = T_Gen_Muon_Px->size();
   
-  UInt_t genPromptTauSize = 0;
-  genPromptTauSize = T_Gen_PromptTau_Px->size(); 
-
-  if ( genPromptMuSize == 1 && fabs(T_Gen_PromptMuon_MpdgId->at(0)) == 24) isMuMu = true; 
-
-  if ( genPromptMuSize < 1 && genPromptTauSize == 1 && fabs(T_Gen_PromptTau_MpdgId->at(0))== 24 && fabs(T_Gen_PromptTau_LepDec_pdgId->at(0)) == 13) isTauMu = true; 
-  
-  if ( isMuMu ) G_GEN_PromptMuon_4vec.push_back(TLorentzVector(T_Gen_PromptMuon_Px->at(0), T_Gen_PromptMuon_Py->at(0),T_Gen_PromptMuon_Pz->at(0), T_Gen_PromptMuon_Energy->at(0))); 
-
-  if ( isTauMu ) G_GEN_PromptTauMuon_4vec.push_back(TLorentzVector(T_Gen_PromptTau_LepDec_Px->at(0),T_Gen_PromptTau_LepDec_Py->at(0),T_Gen_PromptTau_LepDec_Pz->at(0), T_Gen_PromptTau_LepDec_Energy->at(0)));
-  
+    UInt_t genPromptTauSize = 0;
+    genPromptTauSize = T_Gen_PromptTau_Px->size(); 
+    
+    if ( genPromptMuSize == 1 && fabs(T_Gen_PromptMuon_MpdgId->at(0)) == 24) isMuMu = true; 
+    
+    if ( genPromptMuSize < 1 && genPromptTauSize == 1 && fabs(T_Gen_PromptTau_MpdgId->at(0))== 24 && fabs(T_Gen_PromptTau_LepDec_pdgId->at(0)) == 13) isTauMu = true; 
+    
+    if ( isMuMu ) {
+      G_GEN_PromptMuon_4vec.push_back(TLorentzVector(T_Gen_PromptMuon_Px->at(0), T_Gen_PromptMuon_Py->at(0),T_Gen_PromptMuon_Pz->at(0), T_Gen_PromptMuon_Energy->at(0)));
+      if ( genNonPromptMuSize > 0) {
+	isNonPrompt = true;
+	G_GEN_Muon_4vec.push_back(TLorentzVector(T_Gen_Muon_Px->at(0), T_Gen_Muon_Py->at(0),T_Gen_Muon_Pz->at(0), T_Gen_Muon_Energy->at(0)));
+      }
+    } 
+    
+    if ( isTauMu ) {
+      G_GEN_PromptTauMuon_4vec.push_back(TLorentzVector(T_Gen_PromptTau_LepDec_Px->at(0),T_Gen_PromptTau_LepDec_Py->at(0),T_Gen_PromptTau_LepDec_Pz->at(0), T_Gen_PromptTau_LepDec_Energy->at(0)));
+      if ( genNonPromptMuSize > 1) {
+	isNonPrompt = true;
+	G_GEN_Muon_4vec.push_back(TLorentzVector(T_Gen_Muon_Px->at(1), T_Gen_Muon_Py->at(1),T_Gen_Muon_Pz->at(1), T_Gen_Muon_Energy->at(1)));
+      }
+    }
+     
   }
-
+  
   
   if (Signal=="MC_GGHWW_S14" || Signal=="MC_GGHWW_PU20bx25" ) { 
 
@@ -365,46 +489,75 @@ void muonAnalyzer::InsideLoop() {
     }
    
   }
-  
-  
-  
 
-  /*  
-  
-   if (Signal=="MC_Wjets_8TeV") {
+  if (Signal=="MC_DY_S14" || Signal=="MC_DY_PU20bx25" ) { 
 
+    UInt_t genPromptMuSize = 0;
+    genPromptMuSize = T_Gen_PromptMuon_Px->size();
+  
+    UInt_t genPromptTauSize = 0;
+    genPromptTauSize = T_Gen_PromptTau_Px->size(); 
+
+    if ( genPromptMuSize == 2 && fabs(T_Gen_PromptMuon_MpdgId->at(0)) == 23 && fabs(T_Gen_PromptMuon_MpdgId->at(1)) == 23 ) isMuMu = true; 
+  
+    if ( genPromptMuSize == 1 && fabs(T_Gen_PromptMuon_MpdgId->at(0)) == 23 && genPromptTauSize == 1 && fabs(T_Gen_PromptTau_MpdgId->at(0))== 23 && fabs(T_Gen_PromptTau_LepDec_pdgId->at(0)) == 13 ) isTauMu = true;
+ 
+    if ( genPromptMuSize < 1 && genPromptTauSize == 2 && fabs(T_Gen_PromptTau_MpdgId->at(0))== 23 && fabs(T_Gen_PromptTau_MpdgId->at(1))== 23 && fabs(T_Gen_PromptTau_LepDec_pdgId->at(0)) == 13 && fabs(T_Gen_PromptTau_LepDec_pdgId->at(1)) == 13) isTauTau = true; 
+
+    //  cout << genPromptMuSize  << "  " << genPromptTauSize << "  " << isTauTau << endl;
+    
+    
+    //if (G_Debug_DefineAnalysisVariables) std::cout << "[DefineAnalysisVariables]: get Tight Muons " << std::endl;
+    
+    //for (unsigned int i = 0; i < genPromptMuSize; i++) {
+      
+      //-->define the global 4D momentum for each muon. 
+      //G_GEN_PromptMuon_4vec.push_back(TLorentzVector(T_Gen_FinalMuon_Px->at(0), T_Gen_FinalMuon_Py->at(0),T_Gen_FinalMuon_Pz->at(0), T_Gen_FinalMuon_Energy->at(0)));
+    
+  }
+   
+  
+  
+    
+  
+  /*
+   
+  
+    if (Signal=="MC_Wjets_8TeV") {
+    
     UInt_t genMuSize = 0;
     genMuSize = T_Gen_Muon_Px->size();
-
+    
     if ( genMuSize == 1 && fabs(T_Gen_Muon_MPID->at(0)) == 24) {
-      
-      isMuMu = true; 
-     
-      G_GEN_PromptMuon_4vec.push_back(TLorentzVector(T_Gen_Muon_Px->at(0), T_Gen_Muon_Py->at(0),T_Gen_Muon_Pz->at(0), T_Gen_Muon_Energy->at(0))); 
+    
+    isMuMu = true; 
+    
+    G_GEN_PromptMuon_4vec.push_back(TLorentzVector(T_Gen_Muon_Px->at(0), T_Gen_Muon_Py->at(0),T_Gen_Muon_Pz->at(0), T_Gen_Muon_Energy->at(0))); 
+    
     }
-
-     //      cout << genMuSize << "  " << T_Gen_Muon_MPID->at(0) << "  " <<  T_Gen_Muon_MPID->at(1) << endl;
-  }
-  
+    
+    //      cout << genMuSize << "  " << T_Gen_Muon_MPID->at(0) << "  " <<  T_Gen_Muon_MPID->at(1) << endl;
+    }
+    
   */
-
+  
 
 
 //------------------------------------------------------------------------------
 // Get all jets
 //------------------------------------------------------------------------------
 
-  unsigned int NjetsCollection=0;
-  double Missing_ET = 0;
-  double Missing_ET_Phi = 0;
+  // unsigned int NjetsCollection=0;
+  // double Missing_ET = 0;
+  // double Missing_ET_Phi = 0;
 
   
-  NjetsCollection = T_JetAKCHS_Px->size();  
-  Missing_ET = T_METPF_ET; 
-  Missing_ET_Phi = T_METPF_Phi;
+  // NjetsCollection = T_JetAKCHS_Px->size();  
+  // Missing_ET = T_METPF_ET; 
+  // Missing_ET_Phi = T_METPF_Phi;
  
 
-  GetAllJets();
+  //GetAllJets();
 
 
 
@@ -415,16 +568,16 @@ void muonAnalyzer::InsideLoop() {
   Int_t N_PV = 0;
   N_PV = T_Vertex_z->size();
   h_N_PV->Fill(N_PV, factN);
-
-
-  //--------------------------------------------------------------------------------
-  // PRE-SELECTION:: Dilepton selection
-  //--------------------------------------------------------------------------------
+  
+  
+//--------------------------------------------------------------------------------
+// PRE-SELECTION:: Dilepton selection
+//--------------------------------------------------------------------------------
   
   // Select the first two muons with higher pt (i==0 and i==1) 
-
+  
   if ( T_Muon_Px->size() > 1 ) {  // require events with at least two muons 
-
+    
     if ( G_Muon_4vec[0].Perp() > 20 &&  fabs(G_Muon_4vec[0].Eta()) < 2.4 && G_Muon_4vec[1].Perp() > 10 && fabs(G_Muon_4vec[1].Eta()) < 2.4 ) { 
  
       int ch1 = T_Muon_Charge->at(0);
@@ -453,15 +606,19 @@ void muonAnalyzer::InsideLoop() {
 	int Mu1 = 0; 
 	int Mu2 = 1;
 
-       if (Signal=="MC_GGHWW_S14" || Signal=="MC_GGHWW_PU20bx25" ) { 
+	int iVertex = -999;
+	int newiVertex = -999;
 
-       
+	double dZVertex = 999.0;
+
+
+       if (Signal=="MC_GGHWW_S14" || Signal=="MC_GGHWW_PU20bx25" || Signal=="MC_DY_S14" || Signal=="MC_DY_PU20bx25") {    
 
 	 Mu1 = 0;	 Mu2 = 1;  
 	 
-	 if ( isMuMu || isTauMu || isTauTau) {   // Matched to a WW gen event 
+	 if ( isMuMu || isTauMu || isTauTau) {   // Matched to a WW or Z gen event 
 	 
-	   if ( passTightMuCuts(Mu1,0.01,0.02,0.1,0,0) ) {  
+	   /*if ( passTightMuCuts(Mu1,0.01,0.02,0.1,0,0) ) {  
 	     h_Dilep_TightMuon_TkLayers[0]->Fill(T_Muon_NLayers->at(Mu1), factN);
 	     h_Dilep_TightMuon_StaHits[0]->Fill(T_Muon_NValidHitsSATrk->at(Mu1), factN);
 	   }
@@ -469,20 +626,30 @@ void muonAnalyzer::InsideLoop() {
 	   if ( passTightMuCuts(Mu2,0.01,0.02,0.1,0,0) ) { 
 	     h_Dilep_TightMuon_TkLayers[1]->Fill(T_Muon_NLayers->at(Mu2), factN);
 	     h_Dilep_TightMuon_StaHits[1]->Fill(T_Muon_NValidHitsSATrk->at(Mu2), factN);
-	   }
+	     }*/
 
-	   FillRelEff("Dilep", 0, Mu1, factN);
-	   FillRelEff("Dilep", 1, Mu2, factN);
+	   iVertex    = SelectedVertexIndex();
+	   newiVertex = SelectedVertexIndex(Mu1, factN); //--> Select the closest vertex to Mu1
+
+	   h_N_PV0_PVLep->Fill(newiVertex - iVertex);
+
+	   dZVertex = T_Vertex_z->at(iVertex) - T_Vertex_z->at(newiVertex);
+	   h_N_dZ_PV0_PVLep->Fill(dZVertex);
+
+	   FillRelEff("Dilep", 0, Mu1, factN, iVertex, newiVertex);
+	   FillRelEff("Dilep", 1, Mu2, factN, iVertex, newiVertex);
+
+	   Filldz2D(Mu1, Mu2, factN, iVertex, newiVertex);
 	 }
        }
 
-       else if (Signal=="MC_GGHWW_8TeV") { 
+       else if (Signal=="MC_GGHWW_8TeV" || Signal=="MC_DY_8TeV") { 
 
 	 isMuMu = true;
 
 	 Mu1 = 0;	 Mu2 = 1;  
 
-	 if ( passTightMuCuts(Mu1,0.01,0.02,0.1,0,0) ) {  
+	 /*if ( passTightMuCuts(Mu1,0.01,0.02,0.1,0,0) ) {  
 	   h_Dilep_TightMuon_TkLayers[0]->Fill(T_Muon_NLayers->at(Mu1), factN);
 	   h_Dilep_TightMuon_StaHits[0]->Fill(T_Muon_NValidHitsSATrk->at(Mu1), factN);
 	 }
@@ -490,10 +657,20 @@ void muonAnalyzer::InsideLoop() {
 	 if ( passTightMuCuts(Mu2,0.01,0.02,0.1,0,0) ) { 
 	   h_Dilep_TightMuon_TkLayers[1]->Fill(T_Muon_NLayers->at(Mu2), factN);
 	   h_Dilep_TightMuon_StaHits[1]->Fill(T_Muon_NValidHitsSATrk->at(Mu2), factN);
-	   }
+	   }*/
+
+	 iVertex    = SelectedVertexIndex();
+	 newiVertex = SelectedVertexIndex(Mu1, factN);
 	 
-	 FillRelEff("Dilep", 0, Mu1, factN);
-	 FillRelEff("Dilep", 1, Mu2, factN);
+	 h_N_PV0_PVLep->Fill(newiVertex - iVertex);
+	 
+	 dZVertex = T_Vertex_z->at(iVertex) - T_Vertex_z->at(newiVertex);
+	 h_N_dZ_PV0_PVLep->Fill(dZVertex);
+	 
+	 FillRelEff("Dilep", 0, Mu1, factN, iVertex, newiVertex);
+	 FillRelEff("Dilep", 1, Mu2, factN, iVertex, newiVertex);
+
+	 Filldz2D(Mu1, Mu2, factN, iVertex, newiVertex);	 
        }
 
        else if ( Signal=="MC_Wjets_S14" || Signal=="MC_Wjets_PU20bx25" ) {
@@ -524,23 +701,38 @@ void muonAnalyzer::InsideLoop() {
 	       Mu1 = 1; Mu2 = 0;}
 	   }
 
+	   double dRfake = 999;
+	   int isFakeMatched = 0;
 
-	   if ( passTightMuCuts(Mu1,0.01,0.02,0.1,0,0) ) {  
-	     h_Dilep_TightMuon_TkLayers[0]->Fill(T_Muon_NLayers->at(Mu1), factN);
-	     h_Dilep_TightMuon_StaHits[0]->Fill(T_Muon_NValidHitsSATrk->at(Mu1), factN);
+	   if (isNonPrompt) {
+	     dRfake = G_GEN_Muon_4vec[0].DeltaR(G_Muon_4vec[Mu2]);
+	     if (dRfake < 0.4) isFakeMatched = 1;	  
 	   }
-	   
-	   if ( passTightMuCuts(Mu2,0.01,0.02,0.1,0,0) ) { 
-	     h_Dilep_TightMuon_TkLayers[1]->Fill(T_Muon_NLayers->at(Mu2), factN);
-	     h_Dilep_TightMuon_StaHits[1]->Fill(T_Muon_NValidHitsSATrk->at(Mu2), factN);
-	   }
-	   
-	   FillRelEff("Dilep", 0, Mu1, factN);
-	   FillRelEff("Dilep", 1, Mu2, factN);
 
+	   iVertex    = SelectedVertexIndex();
+	   newiVertex = SelectedVertexIndex(Mu1, factN);
+
+	   h_N_PV0_PVLep->Fill(newiVertex - iVertex);
+
+	   dZVertex = T_Vertex_z->at(iVertex) - T_Vertex_z->at(newiVertex);
+	   h_N_dZ_PV0_PVLep->Fill(dZVertex);
+
+	   FillRelEff("Dilep", 0, Mu1, factN, iVertex, newiVertex);
+	   FillRelEff("Dilep", 1, Mu2, factN, iVertex, newiVertex);
+
+	   Filldz2D(Mu1, Mu2, factN, iVertex, newiVertex);
+
+	   if ( isFakeMatched ) {
+
+	     h_Dilep_Gen_Muon_MpdgId->Fill(T_Gen_Muon_MpdgId->at(0));
+	     if (iVertex == newiVertex) h_Dilep_Gen_Muon_MpdgId_PV_Eq->Fill(T_Gen_Muon_MpdgId->at(0));
+	     else if (iVertex != newiVertex) h_Dilep_Gen_Muon_MpdgId_PV_NEq->Fill(T_Gen_Muon_MpdgId->at(0));
+	     
+	   }
 	 }
        }
-      	
+
+       
 
        if (Signal=="MC_Wjets_8TeV") { 
 
@@ -566,7 +758,7 @@ void muonAnalyzer::InsideLoop() {
 	 }
 
 	 
-	 if ( passTightMuCuts(Mu1,0.01,0.02,0.1,0,0) ) {  
+	 /*if ( passTightMuCuts(Mu1,0.01,0.02,0.1,0,0) ) {  
 	   h_Dilep_TightMuon_TkLayers[0]->Fill(T_Muon_NLayers->at(Mu1), factN);
 	   h_Dilep_TightMuon_StaHits[0]->Fill(T_Muon_NValidHitsSATrk->at(Mu1), factN);
 	 }
@@ -574,14 +766,23 @@ void muonAnalyzer::InsideLoop() {
 	 if ( passTightMuCuts(Mu2,0.01,0.02,0.1,0,0 ) ) {
 	   h_Dilep_TightMuon_TkLayers[1]->Fill(T_Muon_NLayers->at(Mu2), factN);
 	   h_Dilep_TightMuon_StaHits[1]->Fill(T_Muon_NValidHitsSATrk->at(Mu2), factN);
-	 }
-
-	 FillRelEff("Dilep", 0, Mu1, factN);
-	 FillRelEff("Dilep", 1, Mu2, factN);
+	   }*/
 	 
+	 iVertex    = SelectedVertexIndex();
+	 newiVertex = SelectedVertexIndex(Mu1, factN);
+	 
+	 h_N_PV0_PVLep->Fill(newiVertex - iVertex);
+	 
+	 dZVertex = T_Vertex_z->at(iVertex) - T_Vertex_z->at(newiVertex);
+	 h_N_dZ_PV0_PVLep->Fill(dZVertex);
+
+	 FillRelEff("Dilep", 0, Mu1, factN, iVertex, newiVertex);
+	 FillRelEff("Dilep", 1, Mu2, factN, iVertex, newiVertex);
+
+	 Filldz2D(Mu1, Mu2, factN, iVertex, newiVertex);
        }
 
-
+       /*
        /// For tunning the Tight Muon ID cuts
 
        if(T_Muon_isPFMuon->at(0) && T_Muon_IsGlobalMuon->at(0) &&
@@ -621,12 +822,12 @@ void muonAnalyzer::InsideLoop() {
 	 h_N_Dilep_TightMuCuts_butSTAHits[1]->Fill(T_Muon_NValidHitsSATrk->at(1), factN);
        }
 
-       
+       */
 
 
 
 
-	if (G_Muon_HWW_ID[0] && G_Muon_HWW_ID[1] )      {
+       /*if (G_Muon_HWW_ID[0] && G_Muon_HWW_ID[1] )      {
 
 	  h_N_Dilep_TypeMu->Fill(1.0, factN);
 
@@ -641,7 +842,7 @@ void muonAnalyzer::InsideLoop() {
 	  h_N_Dilep_TypeMu->Fill(2.0, factN);
 	  if ( G_Muon_4vec[0].Perp() <= 20 && G_Muon_4vec[1].Perp() <= 20) h_N_Dilep_TypeMu_LP->Fill(2.0, factN);
 	  if ( G_Muon_4vec[0].Perp() > 20 && G_Muon_4vec[1].Perp() > 20) h_N_Dilep_TypeMu_HP->Fill(2.0, factN);
-	}
+	  }*/
 
 	if (G_Muon_TightID[0] && G_Muon_TightID[1] )    {
 	  h_N_Dilep_TypeMu->Fill(3.0, factN);
@@ -684,7 +885,7 @@ void muonAnalyzer::InsideLoop() {
 
 	}
 
-  
+	/*
 	
 	//--------------------------------------------------------------------------------
 	// SELECTION:: WW level selection
@@ -694,12 +895,13 @@ void muonAnalyzer::InsideLoop() {
 	  if ( G_Muon_4vec[0].Perp() <= 20 && G_Muon_4vec[1].Perp() <= 20) h_N_WWlevel_TypeMu_LP->Fill(0.0, factN);
 	  if ( G_Muon_4vec[0].Perp() > 20 && G_Muon_4vec[1].Perp() > 20) h_N_WWlevel_TypeMu_HP->Fill(0.0, factN);
 		
-
+	  
 	  //------>  Match to a GEN Prompt Muons
 	  if ( isMuMu || isTauMu || isTauTau) { 
 	    FillRelEff("WWlevel", 0, Mu1, factN);
 	    FillRelEff("WWlevel", 1, Mu2, factN);
 	  }
+	  
 
 	  if(T_Muon_isPFMuon->at(0) && T_Muon_IsGlobalMuon->at(0) &&
 	     T_Muon_isPFMuon->at(1) && T_Muon_IsGlobalMuon->at(1)) {
@@ -788,13 +990,16 @@ void muonAnalyzer::InsideLoop() {
 	    h_WWlevel_TightMuISO_pt[Mu2]->Fill(G_Muon_4vec[1].Perp(), factN);
 	    h_WWlevel_TightMuISO_eta[Mu1]->Fill(G_Muon_4vec[0].Eta(), factN);
 	    h_WWlevel_TightMuISO_eta[Mu2]->Fill(G_Muon_4vec[1].Eta(), factN);
-	  }
-	}
-
+	    }
+	    }
+	    
+	*/
       }
+      
+      
     }
   }
- 
+  
 } // end inside Loop
 
 
@@ -1163,30 +1368,49 @@ bool muonAnalyzer::passPFIso (int iMu) {
 // Get tight muon selection (from muon POG), 
 //-----------------------------------------------------------------------------
 
-void muonAnalyzer::FillRelEff(string levelCut, int indexMuon, int iMu,  double weight) {
-
-
-  int _iVertex = SelectedVertexIndex();
-  int _newiVertex = SelectedVertexIndex(indexMuon, iMu, weight);
-
-  if (indexMuon == 1) { 
-    if ( iMu == 0)  _newiVertex = SelectedVertexIndex(indexMuon, 1, weight);
-    if ( iMu == 1)  _newiVertex = SelectedVertexIndex(indexMuon, 0, weight);
-  }
+ void muonAnalyzer::FillRelEff(string levelCut, int indexMuon, int iMu, double weight, int _iVertex, int _newiVertex) {
 
 
   //  cout << _iVertex << "  " <<  _newiVertex << endl;
 
   double _dz = 999;
-  if (_iVertex >= 0 ) _dz = fabs(T_Muon_vz->at(iMu) - T_Vertex_z->at(_iVertex));
-
+  if (_iVertex >= 0 ) _dz = fabs(get_dz(iMu,_iVertex));
   double _newdz = 999;
-  if (_newiVertex >= 0 ) _newdz = fabs(T_Muon_vz->at(iMu) - T_Vertex_z->at(_newiVertex));
+  if (_newiVertex >= 0 ) _newdz = fabs(get_dz(iMu,_newiVertex));
 
 
   if ( levelCut == "Dilep") { 
 
     //h_Dilep_TightMu_RelEff[indexMuon]->Fill(0.0, weight);
+
+    if(T_Muon_IsGlobalMuon->at(iMu) && T_Muon_isPFMuon->at(iMu)) {
+
+      h_Dilep_dz[indexMuon]->Fill(_dz);
+      h_Dilep_dzMu[indexMuon]->Fill(_newdz);    
+      h_Dilep_dz_BestTrack[indexMuon]->Fill(fabs(T_Muon_dzBestTrack->at(iMu)));
+
+      if (indexMuon == 1) h_Dilep_dz_GTrack[indexMuon]->Fill(fabs(T_Muon_dzGTrack->at(iMu)), weight);
+      h_Dilep_dz_InTrack[indexMuon]->Fill(fabs(T_Muon_dzInTrack->at(iMu)), weight);
+
+    }
+    
+    if (_iVertex == _newiVertex) {
+      
+      h_Dilep_dz_PV_Eq[indexMuon]->Fill(_dz, weight);
+      h_Dilep_dzMu_PV_Eq[indexMuon]->Fill(_newdz, weight);
+      
+      if (indexMuon == 0) GetAllJets(1, weight);
+      
+    }
+    
+    else if (_iVertex != _newiVertex) {
+      
+      h_Dilep_dz_PV_NEq[indexMuon]->Fill(_dz, weight);
+      h_Dilep_dzMu_PV_NEq[indexMuon]->Fill(_newdz, weight);
+      
+      if (indexMuon == 0) GetAllJets(0, weight);
+
+    }
 
     if(T_Muon_isPFMuon->at(iMu) && T_Muon_IsGlobalMuon->at(iMu)) {
 
@@ -1197,8 +1421,8 @@ void muonAnalyzer::FillRelEff(string levelCut, int indexMuon, int iMu,  double w
       h_Dilep_PixelHits[indexMuon]->Fill(T_Muon_NValidPixelHitsInTrk->at(iMu), weight); 
       h_Dilep_TkLayers[indexMuon]->Fill(T_Muon_NLayers->at(iMu), weight);
       h_Dilep_dxy[indexMuon]->Fill(T_Muon_IPwrtAveBSInTrack->at(iMu), weight);
-      h_Dilep_dz[indexMuon]->Fill(_dz, weight);
-      h_Dilep_dzMu[indexMuon]->Fill(_newdz, weight);
+
+
 
       h_Dilep_StaHitsEta[indexMuon]->Fill(G_Muon_4vec[iMu].Eta(), T_Muon_NValidHitsSATrk->at(iMu), weight);
       h_Dilep_StaHitsPV[indexMuon]->Fill(T_Vertex_z->size(), T_Muon_NValidHitsSATrk->at(iMu), weight);
@@ -1233,13 +1457,17 @@ void muonAnalyzer::FillRelEff(string levelCut, int indexMuon, int iMu,  double w
 	      if ( T_Muon_NLayers->at(iMu) > 5 ) {
 		
 		h_Dilep_TightMu_RelEff[indexMuon]->Fill(6, weight);
+
+		h_Dilep_dz_bf_dy[indexMuon]->Fill(_dz, weight);
+		h_Dilep_dzMu_bf_dy[indexMuon]->Fill(_newdz, weight);		
+		h_Dilep_dz_BestTrack_bf_dy[indexMuon]->Fill(fabs(T_Muon_dzBestTrack->at(iMu)), weight);
 		
 		if ( (G_Muon_4vec[indexMuon].Perp() < 20 &&  T_Muon_IPwrtAveBSInTrack->at(iMu)  < 0.01) ||
 		     ( G_Muon_4vec[indexMuon].Perp() >= 20  && T_Muon_IPwrtAveBSInTrack->at(iMu)  < 0.02) ) { 
 		  
 		  h_Dilep_TightMu_RelEff[indexMuon]->Fill(7, weight);
 		  
-		  if ( _dz!=999 && _dz < 0.1) {
+		  if ( _dz!=999 && _dz < 0.1) { //&& ( ( indexMuon == 0 && _dz < 0.1 ) || ( indexMuon == 1 && _dz < 0.05 ) ) ) {
 
 		    h_Dilep_TightMu_RelEff[indexMuon]->Fill(8, weight); 
 		    
@@ -1271,7 +1499,7 @@ if ( levelCut == "WWlevel") {
 // Get All Jets in the events
 //------------------------------------------------------------------------------
 
- void muonAnalyzer::GetAllJets() {
+void muonAnalyzer::GetAllJets(int PV_Eq, double weight) {
 
   int sizeJet = 0; 
   sizeJet =  T_JetAKCHS_Px->size(); 
@@ -1281,22 +1509,174 @@ if ( levelCut == "WWlevel") {
 
   Int_t Njets = 0;
   
-  for (unsigned int j = 0; j < sizeJet; j++) {
+  for (int j = 0; j < sizeJet; j++) {
 
       G_Jet_4vec.push_back(TLorentzVector(T_JetAKCHS_Px->at(j),T_JetAKCHS_Py->at(j),T_JetAKCHS_Pz->at(j),T_JetAKCHS_Energy->at(j)));
    
       if ( G_Jet_4vec[j].Perp() < jetPt) continue;
-      if ( G_Jet_4vec[j].Eta() < jetEta) continue;
+      if ( G_Jet_4vec[j].Eta() > jetEta) continue;
       
       Njets++;
+
+      h_Dilep_Jet_Energy->Fill(T_JetAKCHS_Energy->at(j), weight);
+
+      if (PV_Eq == 1) {h_Dilep_Jet_Energy_PV_Eq->Fill(T_JetAKCHS_Energy->at(j), weight); }
+      else            {h_Dilep_Jet_Energy_PV_NEq->Fill(T_JetAKCHS_Energy->at(j), weight);}
+
+
   }
 
   G_N_Jets = Njets;
 
+  h_Dilep_N_Jets->Fill(Njets);
+
+      if (PV_Eq == 1) {h_Dilep_N_Jets_PV_Eq->Fill(Njets); }
+      else            {h_Dilep_N_Jets_PV_NEq->Fill(Njets);}
+
 }
 
+//------------------------------------------------------------------------------
+// Filldz2D
+//------------------------------------------------------------------------------
+void muonAnalyzer::Filldz2D(int iMu1, int iMu2, double weight, int _iVertex, int _newiVertex)
+{
 
+  //Fill 2D histograms, Signal Efficiency histograms, and dilepton 1D histograms
 
+  double _dz1 = 999.0;
+  double _dz2 = 999.0;
+  if (_iVertex >= 0 ) {
+    _dz1 = fabs(get_dz(iMu1, _iVertex));
+    _dz2 = fabs(get_dz(iMu2, _iVertex));
+  }
+
+  double _newdz1 = 999.0;
+  double _newdz2 = 999.0;
+  if (_newiVertex >= 0 ) {
+    _newdz1 = fabs(get_dz(iMu1, _newiVertex));
+    _newdz2 = fabs(get_dz(iMu2, _newiVertex));
+  }
+
+  double _dzBT1 = fabs(T_Muon_dzBestTrack->at(iMu1));
+  double _dzBT2 = fabs(T_Muon_dzBestTrack->at(iMu2));
+
+  if (T_Muon_isPFMuon->at(iMu1) && T_Muon_IsGlobalMuon->at(iMu1) && _dz1<999 && _newdz1<999 && _dzBT1<999) {
+  if (T_Muon_isPFMuon->at(iMu2) && T_Muon_IsGlobalMuon->at(iMu2) && _dz2<999 && _newdz2<999 && _dzBT2<999) {
+    // Applying GLB + PF Muon for both
+      
+      h_2D_Dilep_dz->Fill(_dz1, _dz2, weight);
+      h_2D_Dilep_dzMu->Fill(_newdz1, _newdz2, weight);
+      h_2D_Dilep_dzBT->Fill(_dzBT1, _dzBT2, weight);
+
+      h_2D_Dilep_dz_Eff->Fill(-1,weight);
+      h_2D_Dilep_dzMu_Eff->Fill(-1,weight);
+      h_2D_Dilep_dzBT_Eff->Fill(-1,weight);
+      
+      if (_dz1<0.10)
+	{
+	  for (int i=1;i<=10;i++) {
+	    if (_dz2<0.01*i) h_2D_Dilep_dz_Eff->Fill(i-1,weight);
+	  }
+	}
+
+      if (_newdz1<0.10)
+	{
+	  for (int i=1;i<=10;i++) {
+	    if (_newdz2<0.01*i) h_2D_Dilep_dzMu_Eff->Fill(i-1,weight);
+	  }
+	}
+
+      if (_dzBT1<0.10)
+	{
+	  for (int i=1;i<=10;i++) {
+	    if (_dzBT2<0.01*i) h_2D_Dilep_dzBT_Eff->Fill(i-1,weight);
+	  }
+	}
+
+      h_TrueDilep_dz[0]->Fill(_dz1, weight);
+      h_TrueDilep_dzMu[0]->Fill(_newdz1, weight);    
+      h_TrueDilep_dz_BestTrack[0]->Fill(fabs(T_Muon_dzBestTrack->at(iMu1)), weight);
+      h_TrueDilep_dz[1]->Fill(_dz2, weight);
+      h_TrueDilep_dzMu[1]->Fill(_newdz2, weight);    
+      h_TrueDilep_dz_BestTrack[1]->Fill(fabs(T_Muon_dzBestTrack->at(iMu2)), weight);
+      
+      if (_iVertex == _newiVertex) 
+	{	
+	  h_2D_Dilep_dz_PV_Eq->Fill(_dz1, _dz2, weight);
+	  h_2D_Dilep_dzMu_PV_Eq->Fill(_newdz1, _newdz2, weight);
+	  h_2D_Dilep_dzBT_PV_Eq->Fill(_dzBT1, _dzBT2, weight);	      
+	}
+      
+      else if (_iVertex != _newiVertex) 
+	{
+	  h_2D_Dilep_dz_PV_NEq->Fill(_dz1, _dz2, weight);
+	  h_2D_Dilep_dzMu_PV_NEq->Fill(_newdz1, _newdz2, weight);
+	  h_2D_Dilep_dzBT_PV_NEq->Fill(_dzBT1, _dzBT2, weight);
+	}
+
+      if(T_Muon_NormChi2GTrk->at(iMu1)<10 && T_Muon_NValidHitsSATrk->at(iMu1)>0 && T_Muon_NumOfMatchedStations->at(iMu1)>1 && T_Muon_NValidPixelHitsInTrk->at(iMu1)>0 && T_Muon_NLayers->at(iMu1)>5) {
+      if(T_Muon_NormChi2GTrk->at(iMu2)<10 && T_Muon_NValidHitsSATrk->at(iMu2)>0 && T_Muon_NumOfMatchedStations->at(iMu2)>1 && T_Muon_NValidPixelHitsInTrk->at(iMu2)>0 && T_Muon_NLayers->at(iMu2)>5) {
+
+	//Applying Tight ID selection before dxy cut for both
+	
+	h_2D_Dilep_dz_bf_dy->Fill(_dz1, _dz2, weight);
+	h_2D_Dilep_dzMu_bf_dy->Fill(_newdz1, _newdz2, weight);
+	h_2D_Dilep_dzBT_bf_dy->Fill(_dzBT1, _dzBT2, weight);
+
+	h_2D_Dilep_dz_bf_dy_Eff->Fill(-1,weight);
+	h_2D_Dilep_dzMu_bf_dy_Eff->Fill(-1,weight);
+	h_2D_Dilep_dzBT_bf_dy_Eff->Fill(-1,weight);
+	
+	if (_dz1<0.10)
+	  {
+	    for (int i=1;i<=10;i++) {
+	      if (_dz2<0.01*i) h_2D_Dilep_dz_bf_dy_Eff->Fill(i-1,weight);
+	    }
+	  }
+	
+	if (_newdz1<0.10)
+	  {
+	    for (int i=1;i<=10;i++) {
+	      if (_newdz2<0.01*i) h_2D_Dilep_dzMu_bf_dy_Eff->Fill(i-1,weight);
+	    }
+	  }
+	
+	if (_dzBT1<0.10)
+	  {
+	    for (int i=1;i<=10;i++) {
+	      if (_dzBT2<0.01*i) h_2D_Dilep_dzBT_bf_dy_Eff->Fill(i-1,weight);
+	    }
+	  }
+	
+
+	h_TrueDilep_dz_bf_dy[0]->Fill(_dz1, weight);
+	h_TrueDilep_dzMu_bf_dy[0]->Fill(_newdz1, weight);    
+	h_TrueDilep_dz_BestTrack_bf_dy[0]->Fill(fabs(T_Muon_dzBestTrack->at(iMu1)), weight);
+	h_TrueDilep_dz_bf_dy[1]->Fill(_dz2, weight);
+	h_TrueDilep_dzMu_bf_dy[1]->Fill(_newdz2, weight);    
+	h_TrueDilep_dz_BestTrack_bf_dy[1]->Fill(fabs(T_Muon_dzBestTrack->at(iMu2)), weight);
+	
+	if (_iVertex == _newiVertex) 
+	  {	
+	    h_2D_Dilep_dz_bf_dy_PV_Eq->Fill(_dz1, _dz2, weight);
+	    h_2D_Dilep_dzMu_bf_dy_PV_Eq->Fill(_newdz1, _newdz2, weight);
+	    h_2D_Dilep_dzBT_bf_dy_PV_Eq->Fill(_dzBT1, _dzBT2, weight);	      
+	  }
+	
+	else if (_iVertex != _newiVertex) 
+	  {
+	    h_2D_Dilep_dz_bf_dy_PV_NEq->Fill(_dz1, _dz2, weight);
+	    h_2D_Dilep_dzMu_bf_dy_PV_NEq->Fill(_newdz1, _newdz2, weight);
+	    h_2D_Dilep_dzBT_bf_dy_PV_NEq->Fill(_dzBT1, _dzBT2, weight);
+	  }
+
+      }
+      }
+
+  }
+  }
+
+}
 
 //------------------------------------------------------------------------------
 // SelectedVertexIndex
@@ -1320,66 +1700,140 @@ for (UInt_t iVertex=0; iVertex<T_Vertex_z->size(); iVertex++) {
   }
  }
 
-
-
  return goodVertexIndex;
 
 }
 
 
 //------------------------------------------------------------------------------
-// SelectedVertexIndex wrt to the colser Mu
+// SelectedVertexIndex wrt to the closer Mu
 //------------------------------------------------------------------------------
-Int_t  muonAnalyzer::SelectedVertexIndex(int indexMuon, int iMu,  double weight)
+
+Int_t  muonAnalyzer::SelectedVertexIndex(int iMu, double weight) //--> Currently using this one
 {
-
-  Int_t goodVertexIndex = -999;
+  
   Int_t newgoodVertexIndex = -999;
-
-  Int_t nGoodVertex = 0;
   
-  Double_t maxdR = 999;
-
-  for (UInt_t iVertex=0; iVertex<T_Vertex_z->size(); iVertex++) {
-
-    if (fabs(T_Vertex_z ->at(iVertex)) < 24 &&
-	T_Vertex_rho ->at(iVertex) < 2 &&
-	T_Vertex_ndof ->at(iVertex) > 4 &&
-	!T_Vertex_isFake->at(iVertex)) {
-
-      nGoodVertex++;
-
-      if ( getDeltaR(iMu, iVertex) <  maxdR ) {
-
-	maxdR = getDeltaR(iMu, iVertex);
-	newgoodVertexIndex = iVertex;
-      }
-
-      if (nGoodVertex == 1) {
-
-	goodVertexIndex = iVertex;
-
-	h_N_dR_Vtx_Muon[indexMuon]->Fill(getDeltaR(iMu, iVertex), weight);
-     
-      }
+  Double_t maxdz = 999.0;
+  Double_t dz    = 999.9;
+  
+  for (UInt_t iVertex=0; iVertex<T_Vertex_z->size(); iVertex++) 
+    {
+      
+      if (fabs(T_Vertex_z ->at(iVertex)) < 24 &&
+	  T_Vertex_rho ->at(iVertex) < 2 &&
+	  T_Vertex_ndof ->at(iVertex) > 4 &&
+	  !T_Vertex_isFake->at(iVertex)) 
+	{
+	  
+	  dz = fabs(get_dz(iMu,iVertex));
+	  
+	  if (dz  <  maxdz) 
+	    {
+	      maxdz = dz;
+	      newgoodVertexIndex = iVertex;
+	    }
+	  
+	}
     }
-  }
 
-
-  if ( newgoodVertexIndex != goodVertexIndex )  {
-   
-    float dZVertex = T_Vertex_z ->at(newgoodVertexIndex) - T_Vertex_z ->at(goodVertexIndex) ;
-
-    h_N_dZ_PV0_PVLep->Fill(dZVertex, weight);
-
-  }
-
-  //cout << newgoodVertexIndex << "  " << goodVertexIndex << endl;
+  if(T_Muon_isPFMuon->at(iMu) && T_Muon_IsGlobalMuon->at(iMu)) h_Dilep_dz_GTrack[0]->Fill(maxdz);
   
-  return newgoodVertexIndex; 
+  return newgoodVertexIndex;
+  
   
 }
 
+
+Int_t  muonAnalyzer::SelectedVertexIndex(TString signal, int iMu) //--> Currently NOT using this one
+{
+
+
+  Int_t newgoodVertexIndex = -999;
+
+  Double_t maxdz = 999.0;
+  Double_t dz    = 999.9;
+  
+  if (signal=="MC_GGHWW_S14" || signal=="MC_GGHWW_PU20bx25" || signal=="MC_GGHWW_8TeV" || signal=="MC_DY_S14" || signal=="MC_DY_PU20bx25" || signal=="MC_DY_8TeV")
+    {
+  
+      for (UInt_t iVertex=0; iVertex<T_Vertex_z->size(); iVertex++) {
+	
+	if (fabs(T_Vertex_z ->at(iVertex)) < 24 &&
+	    T_Vertex_rho ->at(iVertex) < 2 &&
+	    T_Vertex_ndof ->at(iVertex) > 4 &&
+	    !T_Vertex_isFake->at(iVertex)) {
+      
+	  dz = fabs(T_Muon_vz->at(0) - T_Vertex_z->at(iVertex)) + fabs(T_Muon_vz->at(1) - T_Vertex_z->at(iVertex));
+	  
+	  if (dz  <  maxdz) 
+	    {
+	      maxdz = dz;
+	      newgoodVertexIndex = iVertex;
+	    }
+	  
+	}
+      }
+      
+      return newgoodVertexIndex;
+      
+    }
+
+  else if (signal=="MC_Wjets_S14" || signal=="MC_Wjets_PU20bx25" || signal=="MC_Wjets_8TeV")
+    {
+  
+      for (UInt_t iVertex=0; iVertex<T_Vertex_z->size(); iVertex++) {
+	
+	if (fabs(T_Vertex_z ->at(iVertex)) < 24 &&
+	    T_Vertex_rho ->at(iVertex) < 2 &&
+	    T_Vertex_ndof ->at(iVertex) > 4 &&
+	    !T_Vertex_isFake->at(iVertex)) {
+      
+	  dz = fabs(T_Muon_vz->at(iMu) - T_Vertex_z->at(iVertex));
+	  
+	  if (dz  <  maxdz) 
+	    {
+	      maxdz = dz;
+	      newgoodVertexIndex = iVertex;
+	    }
+	  
+	}
+      }
+      
+      return newgoodVertexIndex;
+      
+    } 
+  
+}
+
+//------------------------------------------------------------------------------
+// Compute dz  
+//------------------------------------------------------------------------------
+
+ Double_t muonAnalyzer::get_dz (int iMu, int iVtx) { 
+
+   double dz = 999; 
+
+   double vx = T_Muon_vx->at(iMu);
+   double vy = T_Muon_vy->at(iMu);
+   double vz = T_Muon_vz->at(iMu);
+
+   double Vx = T_Vertex_x->at(iVtx);
+   double Vy = T_Vertex_y->at(iVtx);
+   double Vz = T_Vertex_z->at(iVtx);
+
+   double px = T_Muon_Px->at(iMu);
+   double py = T_Muon_Py->at(iMu);
+   double pz = T_Muon_Pz->at(iMu);
+   double pt = T_Muon_Pt->at(iMu);//G_Muon_4vec[iMu].Perp();
+   double phi = G_Muon_4vec[iMu].Phi();
+
+   dz = (Vz - vz) - (((Vx - vx)*std::cos(float(phi)) + (Vy - vy)*std::sin(float(phi)))*(pz/pt));
+   //dz = (vz - Vz) - (((vx-Vx)*px + (vy-Vy)*py)/pt * (pz/pt));
+
+   return dz;
+   
+ };
 
 //------------------------------------------------------------------------------
 // Compute deltaR   
@@ -1623,10 +2077,9 @@ void muonAnalyzer::SetDataMembersAtTermination() {
 
   ///*** 1D histos ***/// 
 
-  h_N_dR_Vtx_Muon[0] = ((TH1F*) FindOutput("h_N_dR_Vtx_Muon_Mu1"));
-  h_N_dR_Vtx_Muon[1] = ((TH1F*) FindOutput("h_N_dR_Vtx_Muon_Mu2"));
 
-  h_N_dZ_PV0_PVLep  = ((TH1F*) FindOutput("h_N_dZ_PV0_PVLep"));
+  h_N_dZ_PV0_PVLep = ((TH1F*) FindOutput("h_N_dZ_PV0_PVLep"));
+  h_N_PV0_PVLep = ((TH1F*) FindOutput("h_N_PV0_PVLep"));
 
   h_N_PV = ((TH1F*) FindOutput("h_N_PV"));
   h_N_Dilep_TypeMu = ((TH1F*) FindOutput("h_N_Dilep_TypeMu"));
@@ -1703,10 +2156,99 @@ void muonAnalyzer::SetDataMembersAtTermination() {
   h_Dilep_PixelHits[1] = ((TH1F*) FindOutput("h_Dilep_PixelHits_Mu2"));
   h_Dilep_TkLayers[0] = ((TH1F*) FindOutput("h_Dilep_TkLayers_Mu1"));
   h_Dilep_TkLayers[1] = ((TH1F*) FindOutput("h_Dilep_TkLayers_Mu2"));
-  h_Dilep_dxy [0] = ((TH1F*) FindOutput(" h_Dilep_dxy_Mu1"));
-  h_Dilep_dxy [1] = ((TH1F*) FindOutput(" h_Dilep_dxy_Mu2"));
-  h_Dilep_dz [0] = ((TH1F*) FindOutput(" h_Dilep_dz_Mu1"));
-  h_Dilep_dz [1] = ((TH1F*) FindOutput(" h_Dilep_dz_Mu2"));
+  h_Dilep_dxy[0] = ((TH1F*) FindOutput(" h_Dilep_dxy_Mu1"));
+  h_Dilep_dxy[1] = ((TH1F*) FindOutput(" h_Dilep_dxy_Mu2"));
+
+  h_Dilep_dz_GTrack[0] = ((TH1F*) FindOutput(" h_Dilep_dz_GTrack_Mu1"));
+  h_Dilep_dz_GTrack[1] = ((TH1F*) FindOutput(" h_Dilep_dz_GTrack_Mu2"));
+  h_Dilep_dz_InTrack[0] = ((TH1F*) FindOutput(" h_Dilep_dz_InTrack_Mu1"));
+  h_Dilep_dz_InTrack[1] = ((TH1F*) FindOutput(" h_Dilep_dz_InTrack_Mu2"));
+
+
+  h_Dilep_dz[0] = ((TH1F*) FindOutput(" h_Dilep_dz_Mu1"));
+  h_Dilep_dz[1] = ((TH1F*) FindOutput(" h_Dilep_dz_Mu2"));
+  h_Dilep_dzMu[0] = ((TH1F*) FindOutput(" h_Dilep_dzMu_Mu1"));
+  h_Dilep_dzMu[1] = ((TH1F*) FindOutput(" h_Dilep_dzMu_Mu2"));
+  h_Dilep_dz_BestTrack[0] = ((TH1F*) FindOutput(" h_Dilep_dz_BestTrack_Mu1"));
+  h_Dilep_dz_BestTrack[1] = ((TH1F*) FindOutput(" h_Dilep_dz_BestTrack_Mu2"));
+
+  h_Dilep_dz_bf_dy[0] = ((TH1F*) FindOutput(" h_Dilep_dz_bf_dy_Mu1"));
+  h_Dilep_dz_bf_dy[1] = ((TH1F*) FindOutput(" h_Dilep_dz_bf_dy_Mu2"));
+  h_Dilep_dzMu_bf_dy[0] = ((TH1F*) FindOutput(" h_Dilep_dzMu_bf_dy_Mu1"));
+  h_Dilep_dzMu_bf_dy[1] = ((TH1F*) FindOutput(" h_Dilep_dzMu_bf_dy_Mu2"));
+  h_Dilep_dz_BestTrack_bf_dy[0] = ((TH1F*) FindOutput(" h_Dilep_dz_BestTrack_bf_dy_Mu1"));
+  h_Dilep_dz_BestTrack_bf_dy[1] = ((TH1F*) FindOutput(" h_Dilep_dz_BestTrack_bf_dy_Mu2"));
+
+  h_TrueDilep_dz[0] = ((TH1F*) FindOutput(" h_TrueDilep_dz_Mu1"));
+  h_TrueDilep_dz[1] = ((TH1F*) FindOutput(" h_TrueDilep_dz_Mu2"));
+  h_TrueDilep_dzMu[0] = ((TH1F*) FindOutput(" h_TrueDilep_dzMu_Mu1"));
+  h_TrueDilep_dzMu[1] = ((TH1F*) FindOutput(" h_TrueDilep_dzMu_Mu2"));
+  h_TrueDilep_dz_BestTrack[0] = ((TH1F*) FindOutput(" h_TrueDilep_dz_BestTrack_Mu1"));
+  h_TrueDilep_dz_BestTrack[1] = ((TH1F*) FindOutput(" h_TrueDilep_dz_BestTrack_Mu2"));
+
+  h_TrueDilep_dz_bf_dy[0] = ((TH1F*) FindOutput(" h_TrueDilep_dz_bf_dy_Mu1"));
+  h_TrueDilep_dz_bf_dy[1] = ((TH1F*) FindOutput(" h_TrueDilep_dz_bf_dy_Mu2"));
+  h_TrueDilep_dzMu_bf_dy[0] = ((TH1F*) FindOutput(" h_TrueDilep_dzMu_bf_dy_Mu1"));
+  h_TrueDilep_dzMu_bf_dy[1] = ((TH1F*) FindOutput(" h_TrueDilep_dzMu_bf_dy_Mu2"));
+  h_TrueDilep_dz_BestTrack_bf_dy[0] = ((TH1F*) FindOutput(" h_TrueDilep_dz_BestTrack_bf_dy_Mu1"));
+  h_TrueDilep_dz_BestTrack_bf_dy[1] = ((TH1F*) FindOutput(" h_TrueDilep_dz_BestTrack_bf_dy_Mu2"));
+
+
+  h_Dilep_dz_PV_Eq[0] = ((TH1F*) FindOutput(" h_Dilep_dz_PVSel_Equal_Mu1"));
+  h_Dilep_dz_PV_Eq[1] = ((TH1F*) FindOutput(" h_Dilep_dz_PVSel_Equal_Mu2"));
+  h_Dilep_dzMu_PV_Eq[0] = ((TH1F*) FindOutput(" h_Dilep_dzMu_PVSel_Equal_Mu1"));
+  h_Dilep_dzMu_PV_Eq[1] = ((TH1F*) FindOutput(" h_Dilep_dzMu_PVSel_Equal_Mu2"));
+
+  h_Dilep_dz_PV_NEq[0] = ((TH1F*) FindOutput(" h_Dilep_dz_PVSel_Not_Equal_Mu1"));
+  h_Dilep_dz_PV_NEq[1] = ((TH1F*) FindOutput(" h_Dilep_dz_PVSel_Not_Equal_Mu2"));
+  h_Dilep_dzMu_PV_NEq[0] = ((TH1F*) FindOutput(" h_Dilep_dzMu_PVSel_Not_Equal_Mu1"));
+  h_Dilep_dzMu_PV_NEq[1] = ((TH1F*) FindOutput(" h_Dilep_dzMu_PVSel_Not_Equal_Mu2"));
+
+
+  h_2D_Dilep_dz_Eff   =  ((TH1F*) FindOutput("h_2D_Dilep_dz_Eff"));
+  h_2D_Dilep_dzMu_Eff =  ((TH1F*) FindOutput("h_2D_Dilep_dzMu_Eff"));
+  h_2D_Dilep_dzBT_Eff =  ((TH1F*) FindOutput("h_2D_Dilep_dzBestTrack_Eff"));
+  h_2D_Dilep_dz_bf_dy_Eff   =  ((TH1F*) FindOutput("h_2D_Dilep_dz_bf_dy_Eff"));
+  h_2D_Dilep_dzMu_bf_dy_Eff =  ((TH1F*) FindOutput("h_2D_Dilep_dzMu_bf_dy_Eff"));
+  h_2D_Dilep_dzBT_bf_dy_Eff =  ((TH1F*) FindOutput("h_2D_Dilep_dzBestTrack_bf_dy_Eff"));
+
+
+  h_2D_Dilep_dz = ((TH2F*) FindOutput("h_2D_Dilep_dz"));
+  h_2D_Dilep_dzMu = ((TH2F*) FindOutput("h_2D_Dilep_dzMu"));
+  h_2D_Dilep_dzBT = ((TH2F*) FindOutput("h_2D_Dilep_dzBestTrack"));
+
+  h_2D_Dilep_dz_PV_Eq = ((TH2F*) FindOutput("h_2D_Dilep_dz_PVSel_Equal"));
+  h_2D_Dilep_dzMu_PV_Eq = ((TH2F*) FindOutput("h_2D_Dilep_dzMu_PVSel_Equal"));
+  h_2D_Dilep_dzBT_PV_Eq = ((TH2F*) FindOutput("h_2D_Dilep_dzBestTrack_PVSel_Equal"));
+
+  h_2D_Dilep_dz_PV_NEq = ((TH2F*) FindOutput("h_2D_Dilep_dz_PVSel_Not_Equal"));
+  h_2D_Dilep_dzMu_PV_NEq = ((TH2F*) FindOutput("h_2D_Dilep_dzMu_PVSel_Not_Equal"));
+  h_2D_Dilep_dzBT_PV_NEq = ((TH2F*) FindOutput("h_2D_Dilep_dzBestTrack_PVSel_Not_Equal"));
+
+  h_2D_Dilep_dz_bf_dy = ((TH2F*) FindOutput("h_2D_Dilep_dz_bf_dy"));
+  h_2D_Dilep_dzMu_bf_dy = ((TH2F*) FindOutput("h_2D_Dilep_dzMu_bf_dy"));
+  h_2D_Dilep_dzBT_bf_dy = ((TH2F*) FindOutput("h_2D_Dilep_dzBestTrack_bf_dy"));
+
+  h_2D_Dilep_dz_bf_dy_PV_Eq = ((TH2F*) FindOutput("h_2D_Dilep_dz_bf_dy_PVSel_Equal"));
+  h_2D_Dilep_dzMu_bf_dy_PV_Eq = ((TH2F*) FindOutput("h_2D_Dilep_dzMu_bf_dy_PVSel_Equal"));
+  h_2D_Dilep_dzBT_bf_dy_PV_Eq = ((TH2F*) FindOutput("h_2D_Dilep_dzBestTrack_bf_dy_PVSel_Equal"));
+
+  h_2D_Dilep_dz_bf_dy_PV_NEq = ((TH2F*) FindOutput("h_2D_Dilep_dz_bf_dy_PVSel_Not_Equal"));
+  h_2D_Dilep_dzMu_bf_dy_PV_NEq = ((TH2F*) FindOutput("h_2D_Dilep_dzMu_bf_dy_PVSel_Not_Equal"));
+  h_2D_Dilep_dzBT_bf_dy_PV_NEq = ((TH2F*) FindOutput("h_2D_Dilep_dzBestTrack_bf_dy_PVSel_Not_Equal"));
+
+
+  h_Dilep_Gen_Muon_MpdgId = ((TH1F*) FindOutput("h_Dilep_Gen_Muon_MpdgId"));
+  h_Dilep_Gen_Muon_MpdgId_PV_Eq = ((TH1F*) FindOutput("h_Dilep_Gen_Muon_MpdgId_PVSel_Equal"));
+  h_Dilep_Gen_Muon_MpdgId_PV_NEq = ((TH1F*) FindOutput("h_Dilep_Gen_Muon_MpdgId_PVSel_Not_Equal"));
+
+  h_Dilep_Jet_Energy = ((TH1F*) FindOutput("h_Dilep_Jet_Energy"));
+  h_Dilep_Jet_Energy_PV_Eq = ((TH1F*) FindOutput("h_Dilep_Jet_Energy_PVSel_Equal"));
+  h_Dilep_Jet_Energy_PV_NEq = ((TH1F*) FindOutput("h_Dilep_Jet_Energy_PVSel_Not_Equal"));
+  
+  h_Dilep_N_Jets = ((TH1F*) FindOutput("h_Dilep_N_Jets")); 
+  h_Dilep_N_Jets_PV_Eq = ((TH1F*) FindOutput("h_Dilep_N_Jets_PVSel_Equal"));
+  h_Dilep_N_Jets_PV_NEq = ((TH1F*) FindOutput("h_Dilep_N_Jets_PVSel_Not_Equal"));
 
 
   //------>  Plots after Tight Muon ID+ISO at dilepton level
