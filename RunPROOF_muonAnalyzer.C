@@ -130,7 +130,7 @@ void RunPROOF_muonAnalyzer(const char* data) {
 
     //gPAFOptions->dataFiles.push_back(dataPath + "/Tree_GluGluToHToWWTo2LAndTau2Nu_M-125_13TeV.root");
 
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_GluGluHWW2L2Nu_NoSkim_PUS14.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS14/Tree_GluGluHWW2L2Nu_NoSkim_PUS14.root");
     
 
     bool isdata = false;
@@ -142,8 +142,8 @@ void RunPROOF_muonAnalyzer(const char* data) {
 
     else if (Signal=="MC_GGHWW_PU20bx25") {
 
-    gPAFOptions->dataFiles.push_back( "/gpfs/csic_projects/cms/calderon/TreesCSA14/Tree_GluGluToHToWWTo2LAndTau2Nu_M-125_13TeV_PU20bx25.root");
-    //gPAFOptions->dataFiles.push_back(dataPath+"/Tree_GluGluHWW2L2Nu_Skim2LPt17_8GeV_PU20bx25.root");
+    //gPAFOptions->dataFiles.push_back( "/gpfs/csic_projects/cms/calderon/TreesCSA14/Tree_GluGluToHToWWTo2LAndTau2Nu_M-125_13TeV_PU20bx25.root");
+    gPAFOptions->dataFiles.push_back(dataPath+"/PU20bx25/Tree_HWW125.root");
     
     bool isdata = false;
     int nEventsInTheSample = 99555; 
@@ -154,29 +154,29 @@ void RunPROOF_muonAnalyzer(const char* data) {
 
   else if (Signal=="MC_Wjets_S14") {
 
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_0.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_1.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_2.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_3.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_4.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_5.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_6.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_7.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_8.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_9.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_10.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_11.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_12.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_13.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_14.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_15.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_16.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_17.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_18.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_19.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_20.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_21.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_22.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_0.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_1.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_2.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_3.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_4.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_5.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_6.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_7.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_8.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_9.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_10.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_11.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_12.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_13.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_14.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_15.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_16.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_17.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_18.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_19.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_20.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_21.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_22.root");
        
 
     bool isdata = false;
@@ -188,31 +188,50 @@ void RunPROOF_muonAnalyzer(const char* data) {
 
   else if (Signal=="MC_Wjets_PU20bx25") {
 
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_0.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_1.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_2.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_3.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_4.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_5.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_6.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_7.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_8.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_9.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_10.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_11.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_12.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_13.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_14.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_15.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_16.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_17.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_18.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_19.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_20.root");
-    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/cms/jfernan/TreesCSA14/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU20bx25_21.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_0.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_1.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_2.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_3.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_4.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_5.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_6.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_7.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_8.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_9.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_10.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_11.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_12.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_13.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_14.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_15.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_16.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_17.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_18.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_19.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_20.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_21.root");
    
     bool isdata = false;
     int nEventsInTheSample = 44190836; 
+    double xSection =  61526.7 ;
+    int whichRun = 2;
+
+ }
+
+  else if (Signal=="MC_DY_PU20bx25") {
+
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_0.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_1.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_2.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_3.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_4.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_5.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_6.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_7.root");
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_8.root");
+   
+    bool isdata = false;
+    int nEventsInTheSample = 15916365; 
     double xSection =  61526.7 ;
     int whichRun = 2;
 
@@ -237,6 +256,25 @@ void RunPROOF_muonAnalyzer(const char* data) {
     bool isdata = false;
     int nEventsInTheSample = 299975; 
     double xSection = 0.444 ;
+    int whichRun = 1; 
+}
+
+  else if (Signal=="MC_DY_8TeV") {
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_0.root");
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_1.root");
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_2.root");
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_3.root");
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_4.root");
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_5.root");
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_6.root");
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_7.root");
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_8.root");
+    gPAFOptions->dataFiles.push_back("/gpfs/csic_projects/tier3data/MC_Summer12_53X/SUSY/Tree_ZJets_Madgraph_9.root");
+    
+  
+    bool isdata = false;
+    int nEventsInTheSample = 10000000; 
+    double xSection = 40000 ;
     int whichRun = 1; 
 }
 
@@ -289,7 +327,7 @@ void RunPROOF_muonAnalyzer(const char* data) {
   //TString output = TString("csa14_HWW125_8Tev.root");
 
 
-    TString output = TString("csa14_"+Signal+"_.root"); 
+    TString output = TString("csa14_"+Signal+"_dzMu1.root"); 
 
 
   //TString output = TString(Signal+".root"); 

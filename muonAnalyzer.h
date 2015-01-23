@@ -46,12 +46,15 @@ class muonAnalyzer: public PAFAnalysis{
 					     float, 
 					     int, 
 					     int);
-   void                      FillRelEff(string, int, int,double);
-   void                      GetAllJets();
+   void                      FillRelEff(string, int, int, double, int, int);
+   void                      Filldz2D(int, int, double, int, int);	
+   void                      GetAllJets(int, double);
    Double_t                  giveMT(int, double, double);
    Double_t                  getDeltaR (int , int );
+   Double_t                  get_dz (int , int );
    Int_t                     SelectedVertexIndex();
-   Int_t                     SelectedVertexIndex(int, int, double);
+   Int_t                     SelectedVertexIndex(int, double);
+   Int_t                     SelectedVertexIndex(TString, int);
    float                     DeltaPhi(float, float);
    float                     projectedMET(int, int);
    float                     deltaPhiJet(int, int);
@@ -70,6 +73,7 @@ class muonAnalyzer: public PAFAnalysis{
    ///** GEN INFORMATION
    std::vector<TLorentzVector> G_GEN_PromptMuon_4vec;
    std::vector<TLorentzVector> G_GEN_PromptTauMuon_4vec;
+   std::vector<TLorentzVector> G_GEN_Muon_4vec;
 
    //** MUONS
    std::vector<TLorentzVector> G_Muon_4vec;
@@ -108,7 +112,7 @@ class muonAnalyzer: public PAFAnalysis{
  
    //* Histograms 
 
-   TH1F       *h_N_dR_Vtx_Muon[2];
+   TH1F       *h_N_PV0_PVLep;
    TH1F       *h_N_dZ_PV0_PVLep;
 
    TH1F       *h_N_PV;
@@ -161,8 +165,65 @@ class muonAnalyzer: public PAFAnalysis{
    TH1F       *h_Dilep_PixelHits [2]; 
    TH1F       *h_Dilep_TkLayers [2]; 
    TH1F       *h_Dilep_dxy [2];
+   TH1F       *h_Dilep_dz_GTrack [2];
+   TH1F       *h_Dilep_dz_InTrack [2];
+
    TH1F       *h_Dilep_dz [2];
    TH1F       *h_Dilep_dzMu [2];
+   TH1F       *h_Dilep_dz_BestTrack [2];
+   TH1F       *h_Dilep_dz_bf_dy [2];
+   TH1F       *h_Dilep_dzMu_bf_dy [2];
+   TH1F       *h_Dilep_dz_BestTrack_bf_dy [2];
+   TH1F       *h_TrueDilep_dz [2];
+   TH1F       *h_TrueDilep_dzMu [2];
+   TH1F       *h_TrueDilep_dz_BestTrack [2];
+   TH1F       *h_TrueDilep_dz_bf_dy [2];
+   TH1F       *h_TrueDilep_dzMu_bf_dy [2];
+   TH1F       *h_TrueDilep_dz_BestTrack_bf_dy [2];
+
+   TH1F       *h_Dilep_dz_PV_Eq [2];
+   TH1F       *h_Dilep_dzMu_PV_Eq [2];
+   TH1F       *h_Dilep_dz_PV_NEq [2];
+   TH1F       *h_Dilep_dzMu_PV_NEq [2];
+
+   TH1F       *h_2D_Dilep_dz_Eff;
+   TH1F       *h_2D_Dilep_dzMu_Eff;
+   TH1F       *h_2D_Dilep_dzBT_Eff;
+   TH1F       *h_2D_Dilep_dz_bf_dy_Eff;
+   TH1F       *h_2D_Dilep_dzMu_bf_dy_Eff;
+   TH1F       *h_2D_Dilep_dzBT_bf_dy_Eff;
+
+   TH2F       *h_2D_Dilep_dz;
+   TH2F       *h_2D_Dilep_dzMu;
+   TH2F       *h_2D_Dilep_dzBT;
+   TH2F       *h_2D_Dilep_dz_PV_Eq;
+   TH2F       *h_2D_Dilep_dzMu_PV_Eq;
+   TH2F       *h_2D_Dilep_dzBT_PV_Eq;
+   TH2F       *h_2D_Dilep_dz_PV_NEq;
+   TH2F       *h_2D_Dilep_dzMu_PV_NEq;
+   TH2F       *h_2D_Dilep_dzBT_PV_NEq;
+   TH2F       *h_2D_Dilep_dz_bf_dy;
+   TH2F       *h_2D_Dilep_dzMu_bf_dy;
+   TH2F       *h_2D_Dilep_dzBT_bf_dy;
+   TH2F       *h_2D_Dilep_dz_bf_dy_PV_Eq;
+   TH2F       *h_2D_Dilep_dzMu_bf_dy_PV_Eq;
+   TH2F       *h_2D_Dilep_dzBT_bf_dy_PV_Eq;
+   TH2F       *h_2D_Dilep_dz_bf_dy_PV_NEq;
+   TH2F       *h_2D_Dilep_dzMu_bf_dy_PV_NEq;
+   TH2F       *h_2D_Dilep_dzBT_bf_dy_PV_NEq;
+
+   TH1F       *h_Dilep_Gen_Muon_MpdgId;
+   TH1F       *h_Dilep_Gen_Muon_MpdgId_PV_Eq;
+   TH1F       *h_Dilep_Gen_Muon_MpdgId_PV_NEq;
+   TH1F       *h_Dilep_Jet_Energy;
+   TH1F       *h_Dilep_Jet_Energy_PV_Eq;
+   TH1F       *h_Dilep_Jet_Energy_PV_NEq;
+   TH1F       *h_Dilep_N_Jets;
+   TH1F       *h_Dilep_N_Jets_PV_Eq;
+   TH1F       *h_Dilep_N_Jets_PV_NEq;
+
+
+
 
    //------>  Plots after Tight Muon ID+ISO at dilepton level
    TH1F       *h_Dilep_TightMuISO_pt  [2];
