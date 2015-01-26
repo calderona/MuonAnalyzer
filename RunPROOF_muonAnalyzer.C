@@ -82,7 +82,7 @@ void RunPROOF_muonAnalyzer(const char* data) {
    //TString dataPath="/gpfs/csic_projects/cms/arodrig/"; //IFCA   (gridui)
   // 1) Set the base path to files
   // TString dataPath="/gpfs/csic_projects/cms/calderon/TreesCSA14"; //IFCA   (gridui)
-  TString dataPath="/gpfs/csic_projects/cms/jfernan/TreesCSA14";
+  TString dataPath="/gpfs/csic_projects/cms/jfernan/TreesPHYS14";
   // TString dataPath="/gpfs/csic_projects/tier3data"; //IFCA   (gridui)
    //        TString dataPath="/hadoop";                      //UniOvi (fanaeui)
   //   TString dataPath="/pool/data1/MiniTrees";        //CERN   (cmsovd02)
@@ -125,8 +125,49 @@ void RunPROOF_muonAnalyzer(const char* data) {
  
   }
 
+  //+++++++++++++++++++++++++++++++++
+  // PHYS14 PU20bx25 SAMPLES
 
-  else if (Signal=="MC_GGHWW_S14") {
+  else if (Signal=="MC_GGHWW_PU20bx25") {
+
+    //gPAFOptions->dataFiles.push_back( "/gpfs/csic_projects/cms/calderon/TreesCSA14/Tree_GluGluToHToWWTo2LAndTau2Nu_M-125_13TeV_PU20bx25.root");
+    gPAFOptions->dataFiles.push_back(dataPath+"/PU20bx25/Tree_HWW125.root");
+    
+    bool isdata = false;
+    int nEventsInTheSample = 99555; 
+    double xSection =  1.0 ;
+    int whichRun = 2; 
+ 
+  }
+
+  else if (Signal=="MC_Wjets_PU20bx25") {
+
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph.root");
+      
+    bool isdata = false;
+    int nEventsInTheSample = 10017462; 
+    double xSection =  20508.9;
+    int whichRun = 2;
+
+ }
+
+  else if (Signal=="MC_DY_PU20bx25") {
+
+    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph.root");
+   
+    bool isdata = false;
+    int nEventsInTheSample = 2829164; 
+    double xSection =  6025.2;
+    int whichRun = 2;
+
+ }
+
+  //++++++++++++++++++++++++++++++++++++++++
+
+
+
+ 
+ else if (Signal=="MC_GGHWW_S14") {
 
     //gPAFOptions->dataFiles.push_back(dataPath + "/Tree_GluGluToHToWWTo2LAndTau2Nu_M-125_13TeV.root");
 
@@ -140,19 +181,7 @@ void RunPROOF_muonAnalyzer(const char* data) {
  
   }
 
-    else if (Signal=="MC_GGHWW_PU20bx25") {
-
-    //gPAFOptions->dataFiles.push_back( "/gpfs/csic_projects/cms/calderon/TreesCSA14/Tree_GluGluToHToWWTo2LAndTau2Nu_M-125_13TeV_PU20bx25.root");
-    gPAFOptions->dataFiles.push_back(dataPath+"/PU20bx25/Tree_HWW125.root");
-    
-    bool isdata = false;
-    int nEventsInTheSample = 99555; 
-    double xSection =  1.0 ;
-    int whichRun = 2; 
- 
-  }
-
-  else if (Signal=="MC_Wjets_S14") {
+ else if (Signal=="MC_Wjets_S14") {
 
     gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_0.root");
     gPAFOptions->dataFiles.push_back(dataPath + "/PUS10/Tree_WJetsToLNu_13TeV-madgraph-pythia8-tauola_NoSkim_PU_S10_1.root");
@@ -186,56 +215,7 @@ void RunPROOF_muonAnalyzer(const char* data) {
   }
 
 
-  else if (Signal=="MC_Wjets_PU20bx25") {
 
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_0.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_1.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_2.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_3.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_4.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_5.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_6.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_7.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_8.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_9.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_10.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_11.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_12.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_13.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_14.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_15.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_16.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_17.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_18.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_19.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_20.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_WJets_Madgraph_21.root");
-   
-    bool isdata = false;
-    int nEventsInTheSample = 44190836; 
-    double xSection =  61526.7 ;
-    int whichRun = 2;
-
- }
-
-  else if (Signal=="MC_DY_PU20bx25") {
-
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_0.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_1.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_2.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_3.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_4.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_5.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_6.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_7.root");
-    gPAFOptions->dataFiles.push_back(dataPath + "/PU20bx25/Tree_ZJets_Madgraph_8.root");
-   
-    bool isdata = false;
-    int nEventsInTheSample = 15916365; 
-    double xSection =  61526.7 ;
-    int whichRun = 2;
-
- }
 
   else if (Signal=="MC_Wjets_8TeV") {
 
@@ -327,7 +307,7 @@ void RunPROOF_muonAnalyzer(const char* data) {
   //TString output = TString("csa14_HWW125_8Tev.root");
 
 
-    TString output = TString("csa14_"+Signal+"_dzMu1.root"); 
+    TString output = TString("phys14_"+Signal+".root"); 
 
 
   //TString output = TString(Signal+".root"); 

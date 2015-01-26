@@ -1814,19 +1814,29 @@ Int_t  muonAnalyzer::SelectedVertexIndex(TString signal, int iMu) //--> Currentl
 
    double dz = 999; 
 
-   double vx = T_Muon_vx->at(iMu);
-   double vy = T_Muon_vy->at(iMu);
-   double vz = T_Muon_vz->at(iMu);
-
    double Vx = T_Vertex_x->at(iVtx);
    double Vy = T_Vertex_y->at(iVtx);
    double Vz = T_Vertex_z->at(iVtx);
 
+   double vx = T_Muon_vx->at(iMu);
+   double vy = T_Muon_vy->at(iMu);
+   double vz = T_Muon_vz->at(iMu);
+
    double px = T_Muon_Px->at(iMu);
    double py = T_Muon_Py->at(iMu);
    double pz = T_Muon_Pz->at(iMu);
-   double pt = T_Muon_Pt->at(iMu);//G_Muon_4vec[iMu].Perp();
+   double pt = T_Muon_Pt->at(iMu);
    double phi = G_Muon_4vec[iMu].Phi();
+
+   /*  double vx = T_Muon_BestTrack_vx->at(iMu);
+   double vy = T_Muon_BestTrack_vy->at(iMu);
+   double vz = T_Muon_BestTrack_vz->at(iMu);
+
+   double px = T_Muon_BestTrack_Px->at(iMu);
+   double py = T_Muon_BestTrack_Py->at(iMu);
+   double pz = T_Muon_BestTrack_Pz->at(iMu);
+   double pt = T_Muon_BestTrack_Pt->at(iMu);
+   double phi = T_Muon_BestTrack_Phi->at(iMu); */
 
    dz = (Vz - vz) - (((Vx - vx)*std::cos(float(phi)) + (Vy - vy)*std::sin(float(phi)))*(pz/pt));
    //dz = (vz - Vz) - (((vx-Vx)*px + (vy-Vy)*py)/pt * (pz/pt));
