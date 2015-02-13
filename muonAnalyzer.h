@@ -39,22 +39,24 @@ class muonAnalyzer: public PAFAnalysis{
    virtual void              Summary(); 
    void                      GetAllHWWMuons();
    void                      GetAllTightMuons();
-   bool                      passPFIso (int);
-   bool                      passTightMuCuts(int, 
-					     float, 
-					     float, 
-					     float, 
-					     int, 
-					     int);
+   bool                      passTightMuCuts(int, float, float, float, int, int);
+   bool                      passHWWMuCuts(int);
+   void                      SetGenInfo(TString);
+   bool                      MatchGenToReco(int&, int&, TString);
    void                      FillRelEff(string, int, int, double, int, int);
-   void                      Filldz2D(int, int, double, int, int);	
-   void                      GetAllJets(int, double);
+   void                      Filldz2D(int, int, double, int, int);
+   void                      FillPFIso(int, int, double, string);
+   void                      FillTypeMu(double, string);
+   void                      FillPtEta(int, int, double, string);
+   bool                      passPFIso (int, string);
+   double                    getPFRelIso (int, string);	
+   void                      GetAllJets(double);
+   Int_t                     SelectedVertexIndex();
+   Int_t                     SelectedVertexIndex(int);
+   Int_t                     SelectedVertexIndex(TString, int);
+   Double_t                  get_dz(int, int);
    Double_t                  giveMT(int, double, double);
    Double_t                  getDeltaR (int , int );
-   Double_t                  get_dz (int , int );
-   Int_t                     SelectedVertexIndex();
-   Int_t                     SelectedVertexIndex(int, double);
-   Int_t                     SelectedVertexIndex(TString, int);
    float                     DeltaPhi(float, float);
    float                     projectedMET(int, int);
    float                     deltaPhiJet(int, int);
@@ -100,6 +102,11 @@ class muonAnalyzer: public PAFAnalysis{
    std::vector<double>         G_Muon_PFPhoton;
    std::vector<double>         G_Muon_PFRho;
 
+   bool        G_isMuMu;
+   bool        G_isTauMu;
+   bool        G_isTauTau;
+   bool        G_isNonPrompt;
+
 
    //** JETS 
    std::vector<TLorentzVector> G_Jet_4vec;   
@@ -116,44 +123,46 @@ class muonAnalyzer: public PAFAnalysis{
    TH1F       *h_N_dZ_PV0_PVLep;
 
    TH1F       *h_N_PV;
+   TH1F       *h_N_PV2;
+   TH1F       *h_N_PV3;
    TH1F       *h_N_Dilep_TypeMu;
    TH1F       *h_N_Dilep_TypeMu_LP;
    TH1F       *h_N_Dilep_TypeMu_HP;
    TH1F       *h_N_WWlevel_TypeMu;
    TH1F       *h_N_WWlevel_TypeMu_LP; 
    TH1F       *h_N_WWlevel_TypeMu_HP;
-   TH1F       *h_N_Dilep_TigtMuCuts;
-   TH1F       *h_N_WWlevel_TigtMuCuts;
+   TH1F       *h_N_Dilep_TightMuCuts;
+   TH1F       *h_N_WWlevel_TightMuCuts;
   
-   TH1F       *h_N_Dilep_TightMuCuts_butTkLayers [2]; 
-   TH1F       *h_N_Dilep_TightMuCuts_butSTAHits [2];
-   TH1F       *h_N_WWlevel_TightMuCuts_butTkLayers [2]; 
-   TH1F       *h_N_WWlevel_TightMuCuts_butSTAHits [2];
+   //TH1F       *h_N_Dilep_TightMuCuts_butTkLayers [2]; 
+   //TH1F       *h_N_Dilep_TightMuCuts_butSTAHits [2];
+   //TH1F       *h_N_WWlevel_TightMuCuts_butTkLayers [2]; 
+   //TH1F       *h_N_WWlevel_TightMuCuts_butSTAHits [2];
 
-   TH1F       *h_N_Dilep_GLBPF_butTkLayers [2]; 
-   TH1F       *h_N_Dilep_GLBPF_butSTAHits [2];
-   TH1F       *h_N_WWlevel_GLBPF_butTkLayers [2]; 
-   TH1F       *h_N_WWlevel_GLBPF_butSTAHits [2];
+   //TH1F       *h_N_Dilep_GLBPF_butTkLayers [2]; 
+   //TH1F       *h_N_Dilep_GLBPF_butSTAHits [2];
+   //TH1F       *h_N_WWlevel_GLBPF_butTkLayers [2]; 
+   //TH1F       *h_N_WWlevel_GLBPF_butSTAHits [2];
 
-   TH1F       *h_Dilep_AllMu_PFIsoBeta_Mu1;
-   TH1F       *h_Dilep_AllMu_PFIsoBeta_Mu2;
-   TH1F       *h_Dilep_HWWMu_PFIsoBeta_Mu1;
-   TH1F       *h_Dilep_HWWMu_PFIsoBeta_Mu2; 
-   TH1F       *h_WWlevel_HWWMu_PFIsoBeta_Mu1;
-   TH1F       *h_WWlevel_HWWMu_PFIsoBeta_Mu2;
+   //TH1F       *h_Dilep_AllMu_PFIsoBeta_Mu1;
+   //TH1F       *h_Dilep_AllMu_PFIsoBeta_Mu2;
+   //TH1F       *h_Dilep_HWWMu_PFIsoBeta_Mu1;
+   //TH1F       *h_Dilep_HWWMu_PFIsoBeta_Mu2; 
+   //TH1F       *h_WWlevel_HWWMu_PFIsoBeta_Mu1;
+   //TH1F       *h_WWlevel_HWWMu_PFIsoBeta_Mu2;
 
 
    //------>  Plots after Tight Muon ID at dilepton level
-   TH1F       *h_Dilep_TightMuon_TkLayers [2];
-   TH1F       *h_Dilep_TightMuon_StaHits [2];
-   TH1F       *h_Dilep_TightMu_PFCH [2];
-   TH1F       *h_Dilep_TightMu_PFNH [2]; 
-   TH1F       *h_Dilep_TightMu_PFPh [2]; 
-   TH1F       *h_Dilep_TightMu_PFRho [2];
+   TH1F       *h_Dilep_TightMu_TkLayers [2];
+   TH1F       *h_Dilep_TightMu_StaHits [2];
+   //TH1F       *h_Dilep_TightMu_PFCH [2];
+   //TH1F       *h_Dilep_TightMu_PFNH [2]; 
+   //TH1F       *h_Dilep_TightMu_PFPh [2]; 
+   //TH1F       *h_Dilep_TightMu_PFRho [2];
 
    TH1F       *h_Dilep_TightMu_pt [2];
    TH1F       *h_Dilep_TightMu_eta [2];
-   TH1F       *h_Dilep_TightMu_PFIsoBeta [2];
+   //   TH1F       *h_Dilep_TightMu_PFIsoBeta [2];
    TH1F       *h_Dilep_TightMu_RelEff [2];
    TH1F       *h_Dilep_Chi2 [2];
    TH1F       *h_Dilep_StaHits [2];
@@ -222,6 +231,31 @@ class muonAnalyzer: public PAFAnalysis{
    TH1F       *h_Dilep_N_Jets_PV_Eq;
    TH1F       *h_Dilep_N_Jets_PV_NEq;
 
+   //-------- Rel. Iso plots
+   TH1F       *h_Dilep_AllMu_PFRelIso_dBetaR03[2];
+   TH1F       *h_Dilep_AllMu_PFRelIso_dBetaR04[2];
+   TH1F       *h_Dilep_AllMu_PFRelIso_PFWeightsR03[2];
+   TH1F       *h_Dilep_AllMu_PFRelIso_PFWeightsR04[2];
+   TH1F       *h_Dilep_HWWMu_PFRelIso_dBetaR03[2];
+   TH1F       *h_Dilep_HWWMu_PFRelIso_dBetaR04[2];
+   TH1F       *h_Dilep_HWWMu_PFRelIso_PFWeightsR03[2];
+   TH1F       *h_Dilep_HWWMu_PFRelIso_PFWeightsR04[2];
+   TH1F       *h_Dilep_TightMu_PFRelIso_dBetaR03[2];
+   TH1F       *h_Dilep_TightMu_PFRelIso_dBetaR04[2];
+   TH1F       *h_Dilep_TightMu_PFRelIso_PFWeightsR03[2];
+   TH1F       *h_Dilep_TightMu_PFRelIso_PFWeightsR04[2];
+   TH1F       *h_WWlevel_AllMu_PFRelIso_dBetaR03[2];
+   TH1F       *h_WWlevel_AllMu_PFRelIso_dBetaR04[2];
+   TH1F       *h_WWlevel_AllMu_PFRelIso_PFWeightsR03[2];
+   TH1F       *h_WWlevel_AllMu_PFRelIso_PFWeightsR04[2];
+   TH1F       *h_WWlevel_HWWMu_PFRelIso_dBetaR03[2];
+   TH1F       *h_WWlevel_HWWMu_PFRelIso_dBetaR04[2];
+   TH1F       *h_WWlevel_HWWMu_PFRelIso_PFWeightsR03[2];
+   TH1F       *h_WWlevel_HWWMu_PFRelIso_PFWeightsR04[2];
+   TH1F       *h_WWlevel_TightMu_PFRelIso_dBetaR03[2];
+   TH1F       *h_WWlevel_TightMu_PFRelIso_dBetaR04[2];
+   TH1F       *h_WWlevel_TightMu_PFRelIso_PFWeightsR03[2];
+   TH1F       *h_WWlevel_TightMu_PFRelIso_PFWeightsR04[2];
 
 
 
