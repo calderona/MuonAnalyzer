@@ -1,10 +1,7 @@
 Everything starts here
 ====
 
-Log into your github account and click "Fork" at the top-right corner of this
-page to get your own copy of this repository.
-
-After that, open a Terminal and log into gridui:
+Open a Terminal and log into gridui:
 
     ssh -Y gridui.ifca.es -o ServerAliveInterval=240
 
@@ -26,7 +23,7 @@ Now we can choose our favorite CMSSW release.
 Get the material
 ====
 
-    git clone https://github.com/your_github_username/MuonTreeAnalyzer.git MuonTreeAnalyzer
+    git clone https://github.com/calderona/MuonAnalyzer.git MuonAnalyzer
 
 
 File description
@@ -46,6 +43,7 @@ Let's run the code
 
 Edit the file runAll_muonAnalyzer.sh:
 
+     cd MuonAnalyzer/src
      vim runAll_muonAnalyzer.sh
 
 Comment/uncomment the necessary lines depending on the samples you want to run.
@@ -66,20 +64,16 @@ It is commit time
 
 First get the latest changes in the repository, if any:
 
-    git pull https://github.com/juanracasti/MuonTreeAnalyzer.git
+    git pull https://github.com/calderona/MuonAnalyzer.git PHYS14
 
 And then commit your changes:
 
     git status
     git add <filepattern>
     git commit -m 'Modified'
-    git push
+    git push PHYS14
 
-Now open a new tab in your browser with your copy of the repository:
 
-    https://github.com/your_github_username/MuonTreeAnalyzer
-
-Open a new pull request with your commits and a brief description
 
 
 
